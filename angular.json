@@ -7,7 +7,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "sim-championship": {
+    "virtual-racing-manager": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -66,10 +66,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "sim-championship:build:production"
+              "buildTarget": "virtual-racing-manager:build:production"
             },
             "development": {
-              "buildTarget": "sim-championship:build:development"
+              "buildTarget": "virtual-racing-manager:build:development"
             }
           },
           "defaultConfiguration": "development"

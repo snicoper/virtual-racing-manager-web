@@ -4,7 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { ThemeService } from './core/theme/theme.service';
 
 @Component({
-  selector: 'sc-root',
+  selector: 'vrm-root',
   imports: [RouterOutlet, MatSlideToggle],
   templateUrl: './app.html',
 })
