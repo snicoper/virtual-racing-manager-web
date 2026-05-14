@@ -1,0 +1,61 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+/** Importante, para ocultar los permisos en los directivas. */
+.hidden {
+  display: none !important;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/***************
+ * TEXTS.
+ */
+
+/***************
+ * COLORS.
+ */
+
+/***********************
+ * Layout.
+ */
+
+.grid {
+  display: grid;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+/** Centrar elementos verticalmente. */
+.align-center {
+  display: inline-flex;
+  vertical-align: middle;
+  align-items: center;
+}

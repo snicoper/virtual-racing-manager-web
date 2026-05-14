@@ -1,0 +1,19 @@
+<mat-toolbar class="mat-elevation-z1">
+  <button mat-icon-button (click)="handleToggleSidebar()">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <span>{{ appName }}</span>
+
+  <span class="spacer"></span>
+
+  <button mat-icon-button (click)="handleToggleTheme()">
+    <mat-icon>
+      {{ theme() === 'dark' ? 'light_mode' : 'dark_mode' }}
+    </mat-icon>
+  </button>
+
+  <button mat-icon-button>
+    <mat-icon>settings</mat-icon>
+  </button>
+</mat-toolbar>

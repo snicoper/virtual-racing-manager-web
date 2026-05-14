@@ -1,0 +1,22 @@
+<mat-drawer-container class="sidebar-container">
+  <mat-drawer class="sidebar" mode="side" [opened]="sidebarState()">
+    <section class="profile">
+      <div class="profile-avatar">
+        <mat-icon>sports_motorsports</mat-icon>
+      </div>
+
+      <div class="profile-info">
+        <h3>Salvador Nicolas</h3>
+        <span>Administrator</span>
+      </div>
+    </section>
+
+    <mat-divider />
+
+    <vrm-sidebar-menu />
+  </mat-drawer>
+
+  <mat-drawer-content class="sidebar-content">
+    <ng-content />
+  </mat-drawer-content>
+</mat-drawer-container>

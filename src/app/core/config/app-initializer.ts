@@ -21,7 +21,7 @@ export class AppInitializer {
       this.timeZoneService.initialize();
       this.luxonDateTimeService.initialize();
       this.dateAdapterService.initialize();
-      this.themeService.load();
+      this.themeService.initialize();
 
       logInfo('AppInitializer.load', 'Application initialized successfully');
     } catch (error) {

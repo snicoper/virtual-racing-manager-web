@@ -1,0 +1,13 @@
+<main class="page-layout">
+  @if (navbarState()) {
+    <vrm-navbar />
+  }
+
+  <vrm-sidebar>
+    <div class="page-layout__content">
+      <ng-content />
+    </div>
+  </vrm-sidebar>
+
+  <vrm-blade />
+</main>

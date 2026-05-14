@@ -1,0 +1,76 @@
+$spacing-values: (
+  0: 0,
+  1: 0.25rem,
+  2: 0.5rem,
+  3: 1rem,
+  4: 1.5rem,
+  5: 2rem,
+  6: 3rem,
+);
+
+$spacing-breakpoints: (
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+);
+
+@mixin spacing-classes($prefix: "") {
+  @each $key, $value in $spacing-values {
+    .#{$prefix}m-#{$key} {
+      margin: $value;
+    }
+    .#{$prefix}mt-#{$key} {
+      margin-block-start: $value;
+    }
+    .#{$prefix}mb-#{$key} {
+      margin-block-end: $value;
+    }
+    .#{$prefix}ms-#{$key} {
+      margin-inline-start: $value;
+    }
+    .#{$prefix}me-#{$key} {
+      margin-inline-end: $value;
+    }
+    .#{$prefix}mx-#{$key} {
+      margin-inline: $value;
+    }
+    .#{$prefix}my-#{$key} {
+      margin-block: $value;
+    }
+
+    .#{$prefix}p-#{$key} {
+      padding: $value;
+    }
+    .#{$prefix}pt-#{$key} {
+      padding-block-start: $value;
+    }
+    .#{$prefix}pb-#{$key} {
+      padding-block-end: $value;
+    }
+    .#{$prefix}ps-#{$key} {
+      padding-inline-start: $value;
+    }
+    .#{$prefix}pe-#{$key} {
+      padding-inline-end: $value;
+    }
+    .#{$prefix}px-#{$key} {
+      padding-inline: $value;
+    }
+    .#{$prefix}py-#{$key} {
+      padding-block: $value;
+    }
+
+    .#{$prefix}gap-#{$key} {
+      gap: $value;
+    }
+  }
+}
+
+@include spacing-classes();
+
+@each $breakpoint, $width in $spacing-breakpoints {
+  @media (min-width: $width) {
+    @include spacing-classes("#{$breakpoint}\\:");
+  }
+}
