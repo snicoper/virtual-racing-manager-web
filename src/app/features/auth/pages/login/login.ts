@@ -25,7 +25,7 @@ export class Login implements OnInit {
 
   readonly formState: FormState = {
     form: this.fb.group({}),
-    badRequest: undefined,
+    apiError: undefined,
     isSubmitted: false,
     isLoading: false,
   };
@@ -44,7 +44,7 @@ export class Login implements OnInit {
     }
 
     // prueba backend 400
-    this.formState.badRequest = {
+    this.formState.apiError = {
       title: 'Bad Request',
       detail: 'Username or password is incorrect',
       status: 409,

@@ -62,14 +62,14 @@ export class FormInput implements ControlValueAccessor {
   onChangeValue(value: string): void {
     this.value.set(value);
 
-    this.clearFieldBadRequestError();
+    this.clearFieldApiError();
 
     this.onChange(value);
     this.onTouch();
   }
 
-  private clearFieldBadRequestError(): void {
-    const errors = this.formState().badRequest?.errors;
+  private clearFieldApiError(): void {
+    const errors = this.formState().apiError?.errors;
 
     if (!errors?.[this.fieldName()]) {
       return;

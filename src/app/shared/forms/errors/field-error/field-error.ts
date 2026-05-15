@@ -17,25 +17,25 @@ export class FieldError {
 
   protected errorMessage(): string | null {
     const control = this.getControl();
-    const badRequestErrors = this.getBadRequestErrors();
+    const apiErrors = this.getApiErrors();
 
-    if (!this.shouldShowErrors(control, badRequestErrors)) {
+    if (!this.shouldShowErrors(control, apiErrors)) {
       return null;
     }
 
-    return badRequestErrors[0] ?? this.getErrorMessageOrNull(control);
+    return apiErrors[0] ?? this.getErrorMessageOrNull(control);
   }
 
-  private getBadRequestErrors(): string[] {
-    if (this.formState().badRequest?.status !== HttpStatusCode.BadRequest) {
+  private getApiErrors(): string[] {
+    if (this.formState().apiError?.status !== HttpStatusCode.BadRequest) {
       return [];
     }
 
-    return this.formState().badRequest?.errors?.[this.fieldName()] ?? [];
+    return this.formState().apiError?.errors?.[this.fieldName()] ?? [];
   }
 
-  private shouldShowErrors(control: AbstractControl, badRequestErrors: string[]): boolean {
-    if (badRequestErrors.length > 0) {
+  private shouldShowErrors(control: AbstractControl, apiErrors: string[]): boolean {
+    if (apiErrors.length > 0) {
       return true;
     }
 

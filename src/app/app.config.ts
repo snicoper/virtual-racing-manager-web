@@ -12,6 +12,9 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { AppInitializer } from './core/config/app-initializer';
 import { CustomErrorHandler } from './core/errors/custom-error-handler';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { apiErrorInterceptor } from './core/interceptors/api-error.interceptor';
+import { apiInterceptor } from './core/interceptors/api.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -28,5 +31,7 @@ export const appConfig: ApplicationConfig = {
 
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
+
+    provideHttpClient(withInterceptors([apiInterceptor, apiErrorInterceptor])),
   ],
 };
