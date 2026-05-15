@@ -1,10 +1,11 @@
 import { HttpStatusCode } from '@angular/common/http';
 import { Component, input } from '@angular/core';
 import { FormState } from '../../form-state.model';
+import { Alert } from '../../../components/alert/alert';
 
 @Component({
   selector: 'vrm-non-field-errors',
-  imports: [],
+  imports: [Alert],
   templateUrl: './non-field-errors.html',
   styleUrl: './non-field-errors.scss',
 })

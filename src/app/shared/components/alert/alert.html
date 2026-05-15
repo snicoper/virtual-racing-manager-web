@@ -1,0 +1,15 @@
+@if (visible()) {
+  <div [class]="resolvedAlertClass()" role="alert">
+    @if (resolvedIcon(); as iconName) {
+      <mat-icon>{{ iconName }}</mat-icon>
+    }
+
+    <span>{{ message() }}</span>
+
+    @if (dismissible()) {
+      <button type="button" class="alert-dismiss" (click)="dismiss()" aria-label="Dismiss alert">
+        <mat-icon>close</mat-icon>
+      </button>
+    }
+  </div>
+}

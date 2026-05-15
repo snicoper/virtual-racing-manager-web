@@ -6,6 +6,8 @@
 
     <mat-card-content>
       <form class="login-form" [formGroup]="formState.form" (ngSubmit)="handleSubmit()">
+        <vrm-non-field-errors class="mb-2" [formState]="formState" />
+
         <vrm-form-input
           formControlName="email"
           fieldName="email"
@@ -33,8 +35,6 @@
 
           <a routerLink="/register">Create account</a>
         </div>
-
-        <vrm-non-field-errors [formState]="formState" />
 
         <button mat-flat-button type="submit">Sign in</button>
       </form>

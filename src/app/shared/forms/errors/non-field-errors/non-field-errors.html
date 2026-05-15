@@ -1,3 +1,3 @@
 @if (errorMessage()) {
-  <div class="non-field-error">{{ errorMessage() }}</div>
+  <vrm-alert type="error" [message]="errorMessage()!" [icon]="true" [dismissible]="false" />
 }

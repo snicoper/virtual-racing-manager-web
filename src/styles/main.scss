@@ -3,4 +3,5 @@
 
 @use "variables";
 
-@use "utilities/main";
+@use "components/main" as components;
+@use "utilities/main" as utilities;
