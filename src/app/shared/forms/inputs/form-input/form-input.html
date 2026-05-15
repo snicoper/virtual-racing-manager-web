@@ -1,1 +1,22 @@
-<p>form-input works!</p>
+<mat-form-field appearance="outline">
+  <mat-label>{{ label() }}</mat-label>
+
+  <input
+    matInput
+    [id]="id"
+    [ngModel]="value()"
+    (ngModelChange)="onChangeValue($event)"
+    [disabled]="isDisabled()"
+    [placeholder]="placeholder()"
+    [type]="formInputType()"
+    [readonly]="readonly()"
+  />
+
+  @if (icon() && formIconPosition() === iconPositions.prefix) {
+    <mat-icon matPrefix>{{ icon() }}</mat-icon>
+  } @else if (icon() && formIconPosition() === iconPositions.suffix) {
+    <mat-icon matSuffix>{{ icon() }}</mat-icon>
+  }
+</mat-form-field>
+
+<vrm-field-error [formState]="formState()" [fieldName]="fieldName()" [fieldText]="label()" />

@@ -1,41 +1,66 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
+import { FormState } from '../../../../shared/forms/errors/field-error/form-state.model';
+import { NonFieldErrors } from '../../../../shared/forms/errors/non-field-errors/non-field-errors';
+import { FormInput } from '../../../../shared/forms/inputs/form-input/form-input';
+import { FormInputType } from '../../../../shared/forms/inputs/form-input/form-input.type';
+import { FormIconPosition } from '../../../../shared/forms/types/form-icon-position.enum';
 
 @Component({
   selector: 'vrm-login',
-  imports: [
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-  ],
+  imports: [ReactiveFormsModule, MatButtonModule, MatCardModule, FormInput, NonFieldErrors],
   templateUrl: './login.html',
   styleUrl: './login.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Login {
+export class Login implements OnInit {
   private readonly fb = inject(FormBuilder);
 
-  protected readonly form = this.fb.nonNullable.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required]],
-  });
+  protected readonly formInputTypes = FormInputType;
+  protected readonly iconPositions = FormIconPosition;
 
-  protected hidePassword = true;
+  readonly formState: FormState = {
+    form: this.fb.group({}),
+    badRequest: undefined,
+    isSubmitted: false,
+    isLoading: false,
+  };
+
+  ngOnInit(): void {
+    this.buildForm();
+  }
 
   protected handleSubmit(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
+    this.formState.isSubmitted = true;
+
+    if (this.formState.form.invalid) {
+      this.formState.form.markAllAsTouched();
 
       return;
     }
+
+    // prueba backend 400
+    this.formState.badRequest = {
+      title: 'Bad Request',
+      detail: 'Validation failed',
+      status: 400,
+      type: 'https://tools.ietf.org/html/rfc7231#section-6.5.1',
+      code: 'validation_failed',
+      errors: {
+        email: ['email must be an email'],
+        username: ['username must match /^[a-z0-9_]+$/ regular expression'],
+        password: ['password must be longer than or equal to 8 characters'],
+        confirmPassword: ['confirmPassword must be longer than or equal to 8 characters'],
+      },
+    };
+  }
+
+  private buildForm(): void {
+    this.formState.form = this.fb.nonNullable.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
+    });
   }
 }

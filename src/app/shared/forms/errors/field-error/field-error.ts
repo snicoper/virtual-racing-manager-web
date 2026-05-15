@@ -1,12 +1,12 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
-import { MatError } from '@angular/material/form-field';
 import { FormState } from './form-state.model';
 
 @Component({
   selector: 'vrm-field-error',
-  imports: [MatError],
+  imports: [],
   templateUrl: './field-error.html',
+  styleUrl: './field-error.scss',
 })
 export class FieldError {
   readonly formState = input.required<FormState>();
@@ -14,11 +14,24 @@ export class FieldError {
   readonly fieldText = input('');
   readonly validateOnlyOnSubmit = input(false);
 
-  protected readonly shouldShowErrors = computed(() => {
+  protected errorMessage(): string | null {
     const control = this.getControl();
+    const badRequestErrors = this.getBadRequestErrors();
 
-    if (!control) {
-      return false;
+    if (!this.shouldShowErrors(control, badRequestErrors)) {
+      return null;
+    }
+
+    return badRequestErrors[0] ?? this.getErrorMessageOrNull(control);
+  }
+
+  private getBadRequestErrors(): string[] {
+    return this.formState().badRequest?.errors?.[this.fieldName()] ?? [];
+  }
+
+  private shouldShowErrors(control: AbstractControl, badRequestErrors: string[]): boolean {
+    if (badRequestErrors.length > 0) {
+      return true;
     }
 
     if (this.validateOnlyOnSubmit()) {
@@ -26,29 +39,7 @@ export class FieldError {
     }
 
     return control.invalid && (control.touched || control.dirty);
-  });
-
-  protected readonly errorMessage = computed(() => {
-    if (!this.shouldShowErrors()) {
-      return null;
-    }
-
-    const control = this.getControl();
-
-    if (!control?.errors) {
-      return null;
-    }
-
-    if (control.hasError('required')) {
-      return `${this.fieldText()} is required`;
-    }
-
-    if (control.hasError('email')) {
-      return `${this.fieldText()} is not valid`;
-    }
-
-    return null;
-  });
+  }
 
   private getControl(): AbstractControl {
     const control = this.formState().form.get(this.fieldName());
@@ -58,5 +49,17 @@ export class FieldError {
     }
 
     return control;
+  }
+
+  private getErrorMessageOrNull(control: AbstractControl): string | null {
+    if (control.hasError('required')) {
+      return `${this.fieldText()} is required`;
+    }
+
+    if (control.hasError('email')) {
+      return `${this.fieldText()} is not valid`;
+    }
+
+    return null;
   }
 }
