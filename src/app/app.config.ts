@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { provideLuxonDateAdapter } from '@angular/material-luxon-adapter';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, TitleStrategy } from '@angular/router';
 
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { routes } from './app.routes';
@@ -16,6 +16,7 @@ import { CustomErrorHandler } from './core/errors/custom-error-handler';
 import { apiErrorInterceptor } from './core/http/api-error.interceptor';
 import { apiInterceptor } from './core/http/api.interceptor';
 import { authRefreshInterceptor } from './core/http/auth-refresh.interceptor';
+import { TitleStrategyService } from './core/seo/title-strategy.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -29,6 +30,8 @@ export const appConfig: ApplicationConfig = {
       provide: MAT_DATE_LOCALE,
       useValue: 'es-ES',
     },
+
+    { provide: TitleStrategy, useClass: TitleStrategyService },
 
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),

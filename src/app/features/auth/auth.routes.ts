@@ -5,6 +5,6 @@ export const routes: Routes = [
   {
     path: 'login',
     component: Login,
-    title: 'Inicio de sesión',
+    title: 'Login',
   },
 ];
