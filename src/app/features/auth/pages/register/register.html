@@ -1,11 +1,11 @@
-<div class="login">
-  <mat-card class="login-card">
+<div class="register">
+  <mat-card class="register-card">
     <mat-card-header>
       <mat-card-title>{{ siteName }}</mat-card-title>
     </mat-card-header>
 
     <mat-card-content>
-      <form class="login-form" [formGroup]="formState.form" (ngSubmit)="handleSubmit()">
+      <form class="register-form" [formGroup]="formState.form" (ngSubmit)="handleSubmit()">
         <vrm-non-field-errors class="mb-2" [formState]="formState" />
 
         <vrm-form-input
@@ -28,17 +28,19 @@
           [formIconPosition]="iconPositions.suffix"
         />
 
-        <div class="login-links">
-          <a routerLink="/forgot-password">Forgot password?</a>
-
-          <span class="spacer"></span>
-
-          <a [routerLink]="siteUrls.auth.register">Create account</a>
-        </div>
+        <vrm-form-input
+          formControlName="confirmPassword"
+          fieldName="confirmPassword"
+          label="Confirm password"
+          icon="lock"
+          [formState]="formState"
+          [formInputType]="formInputTypes.Password"
+          [formIconPosition]="iconPositions.suffix"
+        />
 
         <vrm-btn-loading
-          styles="full-width"
-          btnText="Sign in"
+          styles="full-width mt-4"
+          btnText="Create account"
           [isLoading]="formState.isLoading()"
         />
       </form>

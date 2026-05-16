@@ -1,11 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { Router, RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
-import { LoginRequest } from '../../../../core/auth/contracts/requests/login.request';
-import { AuthService } from '../../../../core/auth/services/auth.service';
 import { AppEnvironment } from '../../../../core/config/app-environment';
 import { SiteUrls } from '../../../../core/navigation/site-urls';
 import { BtnLoading } from '../../../../shared/components/buttons/btn-loading/btn-loading';
@@ -14,26 +11,20 @@ import { FormIconPosition } from '../../../../shared/forms/form-icon-position.en
 import { FormState } from '../../../../shared/forms/form-state.model';
 import { FormInput } from '../../../../shared/forms/inputs/form-input/form-input';
 import { FormInputType } from '../../../../shared/forms/inputs/form-input/form-input.type';
+import { passwordMustMatchValidator } from '../../../../shared/forms/validators/password-must-match.validator';
+import { RegisterRequest } from '../../contracts/requests/register.request';
+import { AuthApiService } from '../../services/auth-api.service';
 
 @Component({
-  selector: 'vrm-login',
-  imports: [
-    RouterLink,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatCardModule,
-    FormInput,
-    NonFieldErrors,
-    BtnLoading,
-  ],
-  templateUrl: './login.html',
-  styleUrl: './login.scss',
+  selector: 'vrm-register',
+  imports: [ReactiveFormsModule, MatCardModule, NonFieldErrors, FormInput, BtnLoading],
+  templateUrl: './register.html',
+  styleUrl: './register.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Login implements OnInit {
+export class Register implements OnInit {
   private readonly fb = inject(FormBuilder);
-  private readonly authService = inject(AuthService);
-  private readonly router = inject(Router);
+  private readonly authApiService = inject(AuthApiService);
 
   protected readonly formInputTypes = FormInputType;
   protected readonly iconPositions = FormIconPosition;
@@ -61,25 +52,32 @@ export class Login implements OnInit {
     }
 
     this.formState.isLoading.set(true);
-    const loginRequest: LoginRequest = this.formState.form.value;
+    const registerRequest: RegisterRequest = this.formState.form.getRawValue();
 
-    this.authService
-      .login(loginRequest)
+    this.authApiService
+      .register(registerRequest)
       .pipe(finalize(() => this.formState.isLoading.set(false)))
       .subscribe({
         next: () => {
-          this.router.navigate([SiteUrls.home]);
+          this.formState.problemDetails.set(null);
+          this.formState.form.reset();
         },
-        error: (error) => {
+        error: (error: HttpErrorResponse) => {
           this.formState.problemDetails.set(error.error);
         },
       });
   }
 
   private buildForm(): void {
-    this.formState.form = this.fb.nonNullable.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
-    });
+    this.formState.form = this.fb.nonNullable.group(
+      {
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(8)]],
+        confirmPassword: [''],
+      },
+      {
+        validators: [passwordMustMatchValidator('password', 'confirmPassword')],
+      },
+    );
   }
 }

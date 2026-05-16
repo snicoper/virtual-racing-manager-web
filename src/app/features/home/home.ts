@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { PageLayout } from '../../layout/page-layout/page-layout';
 
 @Component({
@@ -6,5 +6,6 @@ import { PageLayout } from '../../layout/page-layout/page-layout';
   imports: [PageLayout],
   templateUrl: './home.html',
   styleUrl: './home.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Home {}

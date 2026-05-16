@@ -3,6 +3,7 @@ export const SiteUrls = {
 
   auth: {
     login: '/auth/login',
+    register: '/auth/register',
   },
 
   errors: {

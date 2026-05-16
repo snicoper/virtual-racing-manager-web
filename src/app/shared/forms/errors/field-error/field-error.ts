@@ -65,6 +65,10 @@ export class FieldError {
       return `${this.fieldText()} is not valid`;
     }
 
+    if (control.hasError('noPasswordMatch')) {
+      return `Passwords do not match`;
+    }
+
     return null;
   }
 }
