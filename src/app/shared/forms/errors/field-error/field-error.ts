@@ -27,11 +27,11 @@ export class FieldError {
   }
 
   private getApiErrors(): string[] {
-    if (this.formState().problemDetails?.status !== HttpStatusCode.BadRequest) {
+    if (this.formState().problemDetails()?.status !== HttpStatusCode.BadRequest) {
       return [];
     }
 
-    return this.formState().problemDetails?.errors?.[this.fieldName()] ?? [];
+    return this.formState().problemDetails()?.errors?.[this.fieldName()] ?? [];
   }
 
   private shouldShowErrors(control: AbstractControl, apiErrors: string[]): boolean {
@@ -40,7 +40,7 @@ export class FieldError {
     }
 
     if (this.validateOnlyOnSubmit()) {
-      return this.formState().isSubmitted && control.invalid;
+      return this.formState().isSubmitted() && control.invalid;
     }
 
     return control.invalid && (control.touched || control.dirty);

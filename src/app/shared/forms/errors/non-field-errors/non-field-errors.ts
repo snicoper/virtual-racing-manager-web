@@ -1,7 +1,7 @@
 import { HttpStatusCode } from '@angular/common/http';
 import { Component, input } from '@angular/core';
-import { FormState } from '../../form-state.model';
 import { Alert } from '../../../components/alert/alert';
+import { FormState } from '../../form-state.model';
 
 @Component({
   selector: 'vrm-non-field-errors',
@@ -13,7 +13,7 @@ export class NonFieldErrors {
   readonly formState = input.required<FormState>();
 
   protected errorMessage(): string | null {
-    const error = this.formState().problemDetails;
+    const error = this.formState().problemDetails();
 
     if (!error || error.status !== HttpStatusCode.Conflict) {
       return null;

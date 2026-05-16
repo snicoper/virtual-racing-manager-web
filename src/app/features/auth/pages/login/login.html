@@ -36,7 +36,11 @@
           <a routerLink="/register">Create account</a>
         </div>
 
-        <button mat-flat-button type="submit">Sign in</button>
+        <vrm-btn-loading
+          styles="full-width"
+          btnText="Sign in"
+          [isLoading]="formState.isLoading()"
+        />
       </form>
     </mat-card-content>
   </mat-card>
