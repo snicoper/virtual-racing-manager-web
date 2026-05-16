@@ -1,19 +1,18 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
+import { AuthService } from '../../../../core/auth/services/auth.service';
 import { AppEnvironment } from '../../../../core/config/app-environment';
-import { logInfo } from '../../../../core/errors/logger/logger';
+import { SiteUrls } from '../../../../core/navigation/site-urls';
 import { BtnLoading } from '../../../../shared/components/buttons/btn-loading/btn-loading';
 import { NonFieldErrors } from '../../../../shared/forms/errors/non-field-errors/non-field-errors';
 import { FormIconPosition } from '../../../../shared/forms/form-icon-position.enum';
 import { FormState } from '../../../../shared/forms/form-state.model';
 import { FormInput } from '../../../../shared/forms/inputs/form-input/form-input';
 import { FormInputType } from '../../../../shared/forms/inputs/form-input/form-input.type';
-import { LoginResponse } from '../../contracts/responses/login.response';
-import { AuthApiService } from '../../services/auth-api.service';
 
 @Component({
   selector: 'vrm-login',
@@ -31,7 +30,8 @@ import { AuthApiService } from '../../services/auth-api.service';
 })
 export class Login implements OnInit {
   private readonly fb = inject(FormBuilder);
-  private readonly authApiService = inject(AuthApiService);
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
 
   protected readonly formInputTypes = FormInputType;
   protected readonly iconPositions = FormIconPosition;
@@ -60,14 +60,14 @@ export class Login implements OnInit {
     this.formState.isLoading.set(true);
     const loginResponse = this.formState.form.value;
 
-    this.authApiService
+    this.authService
       .login(loginResponse)
       .pipe(finalize(() => this.formState.isLoading.set(false)))
       .subscribe({
-        next: (response: LoginResponse) => {
-          logInfo('Login successful', response);
+        next: () => {
+          this.router.navigate([SiteUrls.home]);
         },
-        error: (error: HttpErrorResponse) => {
+        error: (error) => {
           this.formState.problemDetails.set(error.error);
         },
       });

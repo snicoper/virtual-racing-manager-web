@@ -1,4 +1,5 @@
 import { inject, Injectable } from '@angular/core';
+import { AuthService } from '../auth/services/auth.service';
 import { logError, logInfo } from '../errors/logger/logger';
 import { DateAdapterService } from '../localization/date-adapter.service';
 import { LocaleService } from '../localization/locale.service';
@@ -14,6 +15,7 @@ export class AppInitializer {
   private readonly luxonDateTimeService = inject(LuxonDateTimeService);
   private readonly dateAdapterService = inject(DateAdapterService);
   private readonly themeService = inject(ThemeService);
+  private readonly authService = inject(AuthService);
 
   async load(): Promise<void> {
     try {
@@ -22,6 +24,7 @@ export class AppInitializer {
       this.luxonDateTimeService.initialize();
       this.dateAdapterService.initialize();
       this.themeService.initialize();
+      this.authService.initialize();
 
       logInfo('AppInitializer.load', 'Application initialized successfully');
     } catch (error) {
