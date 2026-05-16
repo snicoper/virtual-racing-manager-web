@@ -5,6 +5,7 @@ import { ApiUrls } from '../../navigation/api-urls';
 import { buildApiUrl } from '../../navigation/url.utils';
 import { LoginRequest } from '../contracts/requests/login.request';
 import { RefreshTokenRequest } from '../contracts/requests/refresh-token.request';
+import { CurrentUserResponse } from '../contracts/responses/current-user.response';
 import { LoginResponse } from '../contracts/responses/login.response';
 
 @Injectable({
@@ -23,5 +24,12 @@ export class AuthApiService extends ApiBaseService {
     const endpoint = buildApiUrl(ApiUrls.auth.refreshToken);
 
     return this.post<RefreshTokenRequest, LoginResponse>(request, endpoint);
+  }
+
+  /** Get current user info. */
+  getCurrentUser(): Observable<CurrentUserResponse> {
+    const endpoint = buildApiUrl(ApiUrls.auth.currentUser);
+
+    return this.get<CurrentUserResponse>(endpoint);
   }
 }

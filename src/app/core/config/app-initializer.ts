@@ -24,11 +24,13 @@ export class AppInitializer {
       this.luxonDateTimeService.initialize();
       this.dateAdapterService.initialize();
       this.themeService.initialize();
-      this.authService.initialize();
+
+      await this.authService.initialize();
 
       logInfo('AppInitializer.load', 'Application initialized successfully');
     } catch (error) {
       logError('AppInitializer.load', 'Error initializing application', error);
+
       throw error;
     }
   }

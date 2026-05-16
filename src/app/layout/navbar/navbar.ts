@@ -16,9 +16,9 @@ export class Navbar {
   private readonly layoutService = inject(LayoutService);
   private readonly themeService = inject(ThemeService);
 
-  readonly appName = AppEnvironment.SiteName;
-  readonly theme = this.themeService.theme;
-  readonly sidebarState = this.layoutService.state.sidebar;
+  protected readonly appName = AppEnvironment.SiteName;
+  protected readonly theme = this.themeService.theme;
+  protected readonly sidebarState = this.layoutService.state.sidebar;
 
   handleToggleSidebar(): void {
     this.layoutService.toggleSidebar();

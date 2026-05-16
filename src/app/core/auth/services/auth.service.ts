@@ -1,14 +1,26 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
-import { catchError, map, Observable, of, throwError } from 'rxjs';
+import {
+  catchError,
+  finalize,
+  firstValueFrom,
+  map,
+  Observable,
+  of,
+  switchMap,
+  tap,
+  throwError,
+} from 'rxjs';
 import { BrowserStorageKey } from '../../browser-storage/browser-storage-key.enum';
 import { BrowserStorageService } from '../../browser-storage/browser-storage.service';
 import { SiteUrls } from '../../navigation/site-urls';
 import { LoginRequest } from '../contracts/requests/login.request';
 import { RefreshTokenRequest } from '../contracts/requests/refresh-token.request';
+import { CurrentUserResponse } from '../contracts/responses/current-user.response';
 import { LoginResponse } from '../contracts/responses/login.response';
 import { AuthState } from '../contracts/states/auth.state';
+import { CurrentUserState } from '../contracts/states/current-user.state';
 import { AuthApiService } from './auth-api.service';
 
 @Injectable({
@@ -19,6 +31,7 @@ export class AuthService {
   private readonly browserStorageService = inject(BrowserStorageService);
   private readonly router = inject(Router);
 
+  private readonly currentUser = signal<CurrentUserResponse | null>(null);
   private readonly isLoading = signal(false);
   private readonly accessToken = signal<string | null>(null);
   private readonly refreshToken = signal<string | null>(null);
@@ -29,26 +42,46 @@ export class AuthService {
     isLoggedIn: computed(() => !!this.accessToken() && !this.isExpired()),
   };
 
-  initialize(): void {
-    this.restoreAuthState();
+  readonly currentUserState: CurrentUserState = {
+    user: this.currentUser.asReadonly(),
+    hasUser: computed(() => !!this.currentUser()),
+  };
+
+  async initialize(): Promise<void> {
+    const hasValidSession = this.restoreAuthState();
+
+    if (!hasValidSession) {
+      return;
+    }
+
+    try {
+      await firstValueFrom(this.loadCurrentUser());
+    } catch {
+      this.clearSession();
+    }
   }
 
-  login(request: LoginRequest): Observable<boolean> {
+  login(request: LoginRequest): Observable<void> {
     this.isLoading.set(true);
 
     return this.authApiService.login(request).pipe(
-      map((response) => {
+      switchMap((response) => {
         this.setSession(response);
-        this.isLoading.set(false);
 
-        return true;
+        return this.authApiService.getCurrentUser();
       }),
-      catchError((error) => {
-        this.isLoading.set(false);
-
-        return throwError(() => error);
+      tap((currentUser) => {
+        this.currentUser.set(currentUser);
       }),
+      map(() => void 0),
+      finalize(() => this.isLoading.set(false)),
     );
+  }
+
+  loadCurrentUser(): Observable<CurrentUserResponse> {
+    return this.authApiService
+      .getCurrentUser()
+      .pipe(tap((currentUser) => this.currentUser.set(currentUser)));
   }
 
   getRefreshToken(): string | null {
@@ -106,12 +139,12 @@ export class AuthService {
     this.browserStorageService.set(BrowserStorageKey.RefreshToken, response.refreshToken);
   }
 
-  private restoreAuthState(): void {
+  private restoreAuthState(): boolean {
     const storedAccessToken = this.browserStorageService.get(BrowserStorageKey.AccessToken);
     const storedRefreshToken = this.browserStorageService.get(BrowserStorageKey.RefreshToken);
 
     if (!storedAccessToken || !storedRefreshToken) {
-      return;
+      return false;
     }
 
     const decodedToken = this.decodeToken(storedAccessToken);
@@ -119,7 +152,7 @@ export class AuthService {
     if (!decodedToken) {
       this.clearSession();
 
-      return;
+      return false;
     }
 
     this.accessToken.set(storedAccessToken);
@@ -128,7 +161,11 @@ export class AuthService {
 
     if (this.isExpired()) {
       this.clearSession();
+
+      return false;
     }
+
+    return true;
   }
 
   private clearSession(): void {
@@ -136,6 +173,7 @@ export class AuthService {
     this.refreshToken.set(null);
     this.decodedToken.set(null);
     this.isLoading.set(false);
+    this.currentUser.set(null);
 
     this.browserStorageService.remove(BrowserStorageKey.AccessToken);
     this.browserStorageService.remove(BrowserStorageKey.RefreshToken);
