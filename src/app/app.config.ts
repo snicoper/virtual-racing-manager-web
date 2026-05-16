@@ -15,6 +15,7 @@ import { AppInitializer } from './core/config/app-initializer';
 import { CustomErrorHandler } from './core/errors/custom-error-handler';
 import { apiErrorInterceptor } from './core/http/api-error.interceptor';
 import { apiInterceptor } from './core/http/api.interceptor';
+import { authRefreshInterceptor } from './core/http/auth-refresh.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -32,6 +33,8 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
 
-    provideHttpClient(withInterceptors([apiInterceptor, apiErrorInterceptor])),
+    provideHttpClient(
+      withInterceptors([apiInterceptor, authRefreshInterceptor, apiErrorInterceptor]),
+    ),
   ],
 };

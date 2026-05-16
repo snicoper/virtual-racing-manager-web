@@ -2,14 +2,14 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
+import { BrowserStorageKey } from '../../browser-storage/browser-storage-key.enum';
+import { BrowserStorageService } from '../../browser-storage/browser-storage.service';
 import { SiteUrls } from '../../navigation/site-urls';
 import { LoginRequest } from '../contracts/requests/login.request';
 import { RefreshTokenRequest } from '../contracts/requests/refresh-token.request';
 import { LoginResponse } from '../contracts/responses/login.response';
-import { AuthApiService } from './auth-api.service';
-import { BrowserStorageKey } from '../../browser-storage/browser-storage-key.enum';
-import { BrowserStorageService } from '../../browser-storage/browser-storage.service';
 import { AuthState } from '../contracts/states/auth.state';
+import { AuthApiService } from './auth-api.service';
 
 @Injectable({
   providedIn: 'root',
@@ -49,6 +49,10 @@ export class AuthService {
         return throwError(() => error);
       }),
     );
+  }
+
+  getRefreshToken(): string | null {
+    return this.refreshToken();
   }
 
   tryRefreshToken(): Observable<string | null> {
