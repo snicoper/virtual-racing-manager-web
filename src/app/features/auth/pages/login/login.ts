@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -39,6 +46,10 @@ export class Login implements OnInit {
   protected readonly iconPositions = FormIconPosition;
   protected readonly siteName = AppEnvironment.SiteName;
   protected readonly siteUrls = SiteUrls;
+
+  protected readonly isEmailNotVerifiedError = computed(
+    () => this.formState.problemDetails()?.code === 'email_not_verified',
+  );
 
   protected readonly formState: FormState = {
     form: this.fb.group({}),

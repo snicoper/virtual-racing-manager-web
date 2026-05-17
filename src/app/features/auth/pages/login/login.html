@@ -8,6 +8,13 @@
       <form class="login-form" [formGroup]="formState.form" (ngSubmit)="handleSubmit()">
         <vrm-non-field-errors class="mb-2" [formState]="formState" />
 
+        @if (isEmailNotVerifiedError()) {
+          <p class="mb-2">
+            Need a new verification email?
+            <a [routerLink]="siteUrls.auth.resendVerifyEmail">Resend verification email</a>
+          </p>
+        }
+
         <vrm-form-input
           formControlName="email"
           fieldName="email"
