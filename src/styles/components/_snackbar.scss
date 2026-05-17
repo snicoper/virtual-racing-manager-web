@@ -1,0 +1,36 @@
+/** Toast. **/
+// Selecciona los colores en base a los colores del tema.
+.mat-mdc-snack-bar-container {
+  &.snackbar-success,
+  &.snackbar-error,
+  &.snackbar-warning {
+    max-width: 300px;
+    position: relative;
+    right: 0;
+    top: 60px;
+  }
+
+  &.snackbar-success {
+    --mat-snack-bar-container-color: var(--mat-extended-success-color-container);
+    --mat-snack-bar-button-color: var(--mat-extended-success-on-color-container);
+    --mat-snack-bar-supporting-text-color: var(--mat-extended-success-on-color-container);
+  }
+
+  &.snackbar-info {
+    --mat-snack-bar-container-color: var(--mat-extended-info-color-container);
+    --mat-snack-bar-button-color: var(--mat-extended-info-on-color-container);
+    --mat-snack-bar-supporting-text-color: var(--mat-extended-info-on-color-container);
+  }
+
+  &.snackbar-warning {
+    --mat-snack-bar-container-color: var(--mat-extended-warning-color-container);
+    --mat-snack-bar-button-color: var(--mat-extended-warning-on-color-container);
+    --mat-snack-bar-supporting-text-color: var(--mat-extended-warning-on-color-container);
+  }
+
+  &.snackbar-error {
+    --mat-snack-bar-container-color: var(--mat-error-container);
+    --mat-snack-bar-button-color: var(--mat-on-error-container);
+    --mat-snack-bar-supporting-text-color: var(--mat-on-error-container);
+  }
+}
