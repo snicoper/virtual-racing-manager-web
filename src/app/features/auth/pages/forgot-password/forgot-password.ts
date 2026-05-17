@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 import { finalize } from 'rxjs';
 import { AppEnvironment } from '../../../../core/config/app-environment';
 import { SiteUrls } from '../../../../core/navigation/site-urls';
@@ -18,7 +19,7 @@ import { ForgotPasswordRequest } from './forgot-password.request';
 
 @Component({
   selector: 'vrm-forgot-password',
-  imports: [ReactiveFormsModule, RouterLink, MatCardModule, FormInput, BtnLoading],
+  imports: [ReactiveFormsModule, RouterLink, MatCardModule, TranslatePipe, FormInput, BtnLoading],
   templateUrl: './forgot-password.html',
   styleUrl: './forgot-password.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

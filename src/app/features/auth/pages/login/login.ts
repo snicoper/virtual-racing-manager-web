@@ -3,6 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { Router, RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 import { finalize } from 'rxjs';
 import { LoginRequest } from '../../../../core/auth/contracts/requests/login.request';
 import { AuthService } from '../../../../core/auth/services/auth.service';
@@ -23,6 +24,7 @@ import { FormInputType } from '../../../../shared/forms/inputs/form-input/form-i
     ReactiveFormsModule,
     MatButtonModule,
     MatCardModule,
+    TranslatePipe,
     FormInput,
     NonFieldErrors,
     BtnLoading,

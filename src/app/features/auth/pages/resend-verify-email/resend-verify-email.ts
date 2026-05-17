@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { Router, RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 import { finalize } from 'rxjs';
 import { AppEnvironment } from '../../../../core/config/app-environment';
 import { SiteUrls } from '../../../../core/navigation/site-urls';
@@ -17,7 +18,7 @@ import { AuthApiService } from '../../services/auth-api.service';
 
 @Component({
   selector: 'vrm-resend-verify-email',
-  imports: [RouterLink, ReactiveFormsModule, MatCardModule, FormInput, BtnLoading],
+  imports: [RouterLink, ReactiveFormsModule, MatCardModule, TranslatePipe, FormInput, BtnLoading],
   templateUrl: './resend-verify-email.html',
   styleUrl: './resend-verify-email.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

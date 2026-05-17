@@ -9,12 +9,12 @@
   <span class="btn-content">
     @if (isLoading()) {
       <mat-spinner [color]="spinnerColor()" [diameter]="20" />
-      <span>{{ btnTextLoading() }}</span>
+      <span>{{ btnLoadingKey() | translate }}</span>
     } @else {
       @if (icon()) {
         <mat-icon>{{ icon() }}</mat-icon>
       }
-      <span>{{ btnText() }}</span>
+      <span>{{ btnKey() | translate }}</span>
     }
   </span>
 </button>

@@ -1,7 +1,7 @@
 <div class="resend-verify-email">
   <mat-card class="resend-verify-email-card">
     <mat-card-header>
-      <mat-card-title>Resend Verification Email</mat-card-title>
+      <mat-card-title>{{ 'auth.resendVerifyEmail.title' | translate }}</mat-card-title>
       <mat-card-subtitle>{{ siteName }}</mat-card-subtitle>
     </mat-card-header>
 
@@ -14,7 +14,7 @@
         <vrm-form-input
           formControlName="email"
           fieldName="email"
-          label="Email"
+          labelKey="auth.resendVerifyEmail.email"
           icon="mail"
           [formState]="formState"
           [formInputType]="formInputTypes.Email"
@@ -22,14 +22,16 @@
         />
 
         <div class="resend-verify-email-links">
-          <a [routerLink]="[siteUrls.auth.login]">Already have an account? Log in</a>
+          <a [routerLink]="[siteUrls.auth.login]">
+            {{ 'auth.resendVerifyEmail.alreadyHaveAccount' | translate }}
+          </a>
 
           <span class="spacer"></span>
         </div>
 
         <vrm-btn-loading
           styles="full-width mt-4"
-          btnText="Resend Verification Email"
+          btnKey="auth.resendVerifyEmail.submit"
           [isLoading]="formState.isLoading()"
         />
       </form>

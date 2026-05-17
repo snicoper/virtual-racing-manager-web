@@ -1,0 +1,49 @@
+{
+  "auth": {
+    "forgotPassword": {
+      "title": "Forgot password?",
+      "email": "Email",
+      "alreadyHaveAccount": "Already have an account? Log in",
+      "submit": "Send Password Reset Instructions"
+    },
+    "login": {
+      "title": "Login",
+      "needVerificationEmail": "Need a new verification email?",
+      "resendVerificationEmail": "Need a new verification email?",
+      "email": "Email",
+      "password": "Password",
+      "forgotPassword": "Forgot password?",
+      "createAccount": "Create account",
+      "submit": "Sign in"
+    },
+    "register": {
+      "title": "Register",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "alreadyHaveAccount": "Already have an account? Log in",
+      "submit": "Create account"
+    },
+    "resendVerifyEmail": {
+      "title": "Resend Verification Email",
+      "email": "Email",
+      "alreadyHaveAccount": "Already have an account? Log in",
+      "submit": "Resend Verification Email"
+    },
+    "resetPassword": {
+      "title": "Reset Password",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "alreadyHaveAccount": "Already have an account? Log in",
+      "submit": "Reset Password"
+    },
+    "verifyEmail": {
+      "title": "Verify Email",
+      "loading": "Your email is being verified...",
+      "successMessage": "Your email has been successfully verified.",
+      "login": "Login",
+      "errorMessage": "The verification token is invalid or has expired.",
+      "resendEmail": "Resend Verification Email"
+    }
+  }
+}

@@ -1,5 +1,5 @@
 <mat-form-field appearance="outline">
-  <mat-label>{{ label() }}</mat-label>
+  <mat-label>{{ labelKey() | translate }}</mat-label>
 
   <input
     matInput
@@ -7,7 +7,7 @@
     [ngModel]="value()"
     (ngModelChange)="onChangeValue($event)"
     [disabled]="isDisabled()"
-    [placeholder]="placeholder()"
+    [placeholder]="placeholderKey() | translate"
     [type]="formInputType()"
     [readonly]="readonly()"
   />
@@ -19,4 +19,4 @@
   }
 </mat-form-field>
 
-<vrm-field-error [formState]="formState()" [fieldName]="fieldName()" [fieldText]="label()" />
+<vrm-field-error [formState]="formState()" [fieldName]="fieldName()" [labelKey]="labelKey()" />

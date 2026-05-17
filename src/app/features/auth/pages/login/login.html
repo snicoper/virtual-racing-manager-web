@@ -1,7 +1,7 @@
 <div class="login">
   <mat-card class="login-card">
     <mat-card-header>
-      <mat-card-title>Login</mat-card-title>
+      <mat-card-title>{{ 'auth.login.title' | translate }}</mat-card-title>
       <mat-card-subtitle>{{ siteName }}</mat-card-subtitle>
     </mat-card-header>
 
@@ -11,15 +11,17 @@
 
         @if (isEmailNotVerifiedError()) {
           <p class="mb-2">
-            Need a new verification email?
-            <a [routerLink]="siteUrls.auth.resendVerifyEmail">Resend verification email</a>
+            {{ 'auth.login.needVerificationEmail' | translate }}
+            <a [routerLink]="siteUrls.auth.resendVerifyEmail">
+              {{ 'auth.login.resendVerificationEmail' | translate }}
+            </a>
           </p>
         }
 
         <vrm-form-input
           formControlName="email"
           fieldName="email"
-          label="Email"
+          labelKey="auth.login.email"
           icon="mail"
           [formState]="formState"
           [formInputType]="formInputTypes.Email"
@@ -29,7 +31,7 @@
         <vrm-form-input
           formControlName="password"
           fieldName="password"
-          label="Password"
+          labelKey="auth.login.password"
           icon="lock"
           [formState]="formState"
           [formInputType]="formInputTypes.Password"
@@ -37,16 +39,20 @@
         />
 
         <div class="login-links">
-          <a [routerLink]="siteUrls.auth.forgotPassword">Forgot password?</a>
+          <a [routerLink]="siteUrls.auth.forgotPassword">
+            {{ 'auth.login.forgotPassword' | translate }}
+          </a>
 
           <span class="spacer"></span>
 
-          <a [routerLink]="siteUrls.auth.register">Create account</a>
+          <a [routerLink]="siteUrls.auth.register">
+            {{ 'auth.login.createAccount' | translate }}
+          </a>
         </div>
 
         <vrm-btn-loading
           styles="full-width"
-          btnText="Sign in"
+          btnKey="auth.login.submit"
           [isLoading]="formState.isLoading()"
         />
       </form>

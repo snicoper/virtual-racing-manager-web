@@ -12,7 +12,7 @@ import { FormState } from '../../form-state.model';
 export class FieldError {
   readonly formState = input.required<FormState>();
   readonly fieldName = input.required<string>();
-  readonly fieldText = input('');
+  readonly labelKey = input('');
   readonly validateOnlyOnSubmit = input(false);
 
   protected errorMessage(): string | null {
@@ -58,11 +58,11 @@ export class FieldError {
 
   private getErrorMessageOrNull(control: AbstractControl): string | null {
     if (control.hasError('required')) {
-      return `${this.fieldText()} is required`;
+      return `${this.labelKey()} is required`;
     }
 
     if (control.hasError('email')) {
-      return `${this.fieldText()} is not valid`;
+      return `${this.labelKey()} is not valid`;
     }
 
     if (control.hasError('noPasswordMatch')) {
@@ -72,7 +72,7 @@ export class FieldError {
     if (control.hasError('minlength')) {
       const requiredLength = control.getError('minlength').requiredLength;
 
-      return `${this.fieldText()} must be at least ${requiredLength} characters`;
+      return `${this.labelKey()} must be at least ${requiredLength} characters`;
     }
 
     return null;

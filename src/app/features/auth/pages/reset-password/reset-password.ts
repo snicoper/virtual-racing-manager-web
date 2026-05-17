@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 import { finalize } from 'rxjs';
 import { AppEnvironment } from '../../../../core/config/app-environment';
 import { SiteUrls } from '../../../../core/navigation/site-urls';
@@ -18,7 +19,7 @@ import { ResetPasswordRequest } from './reset-password.request';
 
 @Component({
   selector: 'vrm-reset-password',
-  imports: [ReactiveFormsModule, RouterLink, MatCardModule, FormInput, BtnLoading],
+  imports: [ReactiveFormsModule, RouterLink, MatCardModule, TranslatePipe, FormInput, BtnLoading],
   templateUrl: './reset-password.html',
   styleUrl: './reset-password.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

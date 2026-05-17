@@ -4,6 +4,7 @@ import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/f
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { TranslatePipe } from '@ngx-translate/core';
 import { FieldError } from '../../errors/field-error/field-error';
 import { FormIconPosition } from '../../form-icon-position.enum';
 import { FormState } from '../../form-state.model';
@@ -11,7 +12,7 @@ import { FormInputType } from './form-input.type';
 
 @Component({
   selector: 'vrm-form-input',
-  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatIcon, FieldError],
+  imports: [FormsModule, MatFormFieldModule, TranslatePipe, MatInputModule, MatIcon, FieldError],
   templateUrl: './form-input.html',
   styleUrl: './form-input.scss',
   providers: [
@@ -25,11 +26,11 @@ import { FormInputType } from './form-input.type';
 export class FormInput implements ControlValueAccessor {
   readonly formState = input.required<FormState>();
   readonly fieldName = input.required<string>();
-  readonly label = input.required<string>();
+  readonly labelKey = input.required<string>();
 
   readonly readonly = input(false);
   readonly formInputType = input(FormInputType.Text);
-  readonly placeholder = input('');
+  readonly placeholderKey = input('');
   readonly icon = input('');
   readonly formIconPosition = input(FormIconPosition.prefix);
 
