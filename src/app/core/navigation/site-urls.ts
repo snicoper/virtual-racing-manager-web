@@ -6,6 +6,9 @@ export const SiteUrls = {
     register: '/auth/register',
     verifyEmail: '/auth/verify-email',
     resendVerifyEmail: '/auth/resend-verify-email',
+    forgotPassword: '/auth/forgot-password',
+    resetPassword: '/auth/reset-password',
+    logout: '/auth/logout',
   },
 
   errors: {

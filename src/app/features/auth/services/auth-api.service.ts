@@ -4,10 +4,12 @@ import { ApiBaseService } from '../../../core/http/api-base.service';
 import { NoContent } from '../../../core/http/no-content.type';
 import { ApiUrls } from '../../../core/navigation/api-urls';
 import { buildApiUrl } from '../../../core/navigation/url.utils';
+import { ForgotPasswordRequest } from '../pages/forgot-password/forgot-password.request';
 import { RegisterRequest } from '../pages/register/register.request';
 import { RegisterResponse } from '../pages/register/register.response';
 import { ResendVerifyEmail } from '../pages/resend-verify-email/resend-verify-email';
 import { VerifyEmailRequest } from '../pages/verify-email/verify-email.request';
+import { ResetPasswordRequest } from '../pages/reset-password/reset-password.request';
 
 @Injectable({
   providedIn: 'root',
@@ -32,5 +34,19 @@ export class AuthApiService extends ApiBaseService {
     const endpoint = buildApiUrl(ApiUrls.auth.resendVerifyEmail);
 
     return this.post<ResendVerifyEmail, NoContent>(request, endpoint);
+  }
+
+  /** Forgot password */
+  forgotPassword(request: ForgotPasswordRequest): Observable<NoContent> {
+    const endpoint = buildApiUrl(ApiUrls.auth.forgotPassword);
+
+    return this.post<ForgotPasswordRequest, NoContent>(request, endpoint);
+  }
+
+  /** Reset password */
+  resetPassword(request: ResetPasswordRequest): Observable<NoContent> {
+    const endpoint = buildApiUrl(ApiUrls.auth.resetPassword);
+
+    return this.post<ResetPasswordRequest, NoContent>(request, endpoint);
   }
 }

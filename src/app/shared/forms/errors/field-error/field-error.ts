@@ -69,6 +69,12 @@ export class FieldError {
       return `Passwords do not match`;
     }
 
+    if (control.hasError('minlength')) {
+      const requiredLength = control.getError('minlength').requiredLength;
+
+      return `${this.fieldText()} must be at least ${requiredLength} characters`;
+    }
+
     return null;
   }
 }

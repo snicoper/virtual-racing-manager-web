@@ -44,6 +44,7 @@ export class Register implements OnInit {
   }
 
   protected handleSubmit(): void {
+    this.formState.problemDetails.set(null);
     this.formState.isSubmitted.set(true);
 
     if (this.formState.form.invalid) {
@@ -74,7 +75,7 @@ export class Register implements OnInit {
       {
         email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required, Validators.minLength(8)]],
-        confirmPassword: [''],
+        confirmPassword: ['', [Validators.required]],
       },
       {
         validators: [passwordMustMatchValidator('password', 'confirmPassword')],

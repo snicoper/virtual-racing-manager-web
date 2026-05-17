@@ -2,8 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
+import { AppEnvironment } from '../../../../core/config/app-environment';
 import { SiteUrls } from '../../../../core/navigation/site-urls';
 import { SnackBarService } from '../../../../core/services/snackbar.service';
 import { BtnLoading } from '../../../../shared/components/buttons/btn-loading/btn-loading';
@@ -12,20 +13,19 @@ import { FormState } from '../../../../shared/forms/form-state.model';
 import { FormInput } from '../../../../shared/forms/inputs/form-input/form-input';
 import { FormInputType } from '../../../../shared/forms/inputs/form-input/form-input.type';
 import { AuthApiService } from '../../services/auth-api.service';
-import { AppEnvironment } from '../../../../core/config/app-environment';
+import { ForgotPasswordRequest } from './forgot-password.request';
 
 @Component({
-  selector: 'vrm-resend-verify-email',
-  imports: [RouterLink, ReactiveFormsModule, MatCardModule, FormInput, BtnLoading],
-  templateUrl: './resend-verify-email.html',
-  styleUrl: './resend-verify-email.scss',
+  selector: 'vrm-forgot-password',
+  imports: [ReactiveFormsModule, RouterLink, MatCardModule, FormInput, BtnLoading],
+  templateUrl: './forgot-password.html',
+  styleUrl: './forgot-password.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ResendVerifyEmail implements OnInit {
+export class ForgotPassword implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly authApiService = inject(AuthApiService);
   private readonly snackBarService = inject(SnackBarService);
-  private readonly router = inject(Router);
 
   protected readonly formState: FormState = {
     form: this.fb.group({}),
@@ -34,16 +34,17 @@ export class ResendVerifyEmail implements OnInit {
     isLoading: signal(false),
   };
 
-  protected readonly siteUrls = SiteUrls;
   protected readonly formInputTypes = FormInputType;
   protected readonly iconPositions = FormIconPosition;
   protected readonly siteName = AppEnvironment.SiteName;
+  protected readonly siteUrls = SiteUrls;
 
   ngOnInit(): void {
     this.buildForm();
   }
 
-  handleSubmit(): void {
+  protected handleSubmit(): void {
+    this.formState.problemDetails.set(null);
     this.formState.isSubmitted.set(true);
 
     if (this.formState.form.invalid) {
@@ -53,27 +54,26 @@ export class ResendVerifyEmail implements OnInit {
     }
 
     this.formState.isLoading.set(true);
-    const resendVerifyEmailRequest = this.formState.form.getRawValue();
+    const forgotPasswordRequest: ForgotPasswordRequest = this.formState.form.getRawValue();
 
     this.authApiService
-      .resendVerifyEmail(resendVerifyEmailRequest)
+      .forgotPassword(forgotPasswordRequest)
       .pipe(finalize(() => this.formState.isLoading.set(false)))
       .subscribe({
         next: () => {
-          this.formState.problemDetails.set(null);
           this.formState.form.reset();
           this.snackBarService.success(
-            'Verification email has been sent, please check your inbox.',
+            'Password reset instructions have been sent, please check your inbox.',
           );
-          this.router.navigate([SiteUrls.auth.login]);
         },
         error: (error: HttpErrorResponse) => {
           this.formState.problemDetails.set(error.error);
+          this.snackBarService.error('Failed to send password reset instructions.');
         },
       });
   }
 
-  private buildForm(): void {
+  protected buildForm(): void {
     this.formState.form = this.fb.nonNullable.group({
       email: ['', [Validators.required, Validators.email]],
     });

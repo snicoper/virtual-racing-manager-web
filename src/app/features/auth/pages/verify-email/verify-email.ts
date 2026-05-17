@@ -4,6 +4,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
 import { SiteUrls } from '../../../../core/navigation/site-urls';
 import { AuthApiService } from '../../services/auth-api.service';
+import { AppEnvironment } from '../../../../core/config/app-environment';
 
 @Component({
   selector: 'vrm-verify-email',
@@ -19,6 +20,7 @@ export class VerifyEmail implements OnInit {
   protected readonly loading = signal(true);
   protected readonly isTokenValid = signal(false);
   protected readonly siteUrls = SiteUrls;
+  protected readonly siteName = AppEnvironment.SiteName;
 
   ngOnInit(): void {
     const token = this.route.snapshot.queryParamMap.get('token');
