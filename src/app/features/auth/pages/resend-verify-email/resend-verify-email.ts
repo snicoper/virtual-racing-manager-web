@@ -1,18 +1,19 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { Router, RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
+import { AppEnvironment } from '../../../../core/config/app-environment';
 import { SiteUrls } from '../../../../core/navigation/site-urls';
 import { SnackBarService } from '../../../../core/services/snackbar.service';
 import { BtnLoading } from '../../../../shared/components/buttons/btn-loading/btn-loading';
 import { FormIconPosition } from '../../../../shared/forms/form-icon-position.enum';
 import { FormState } from '../../../../shared/forms/form-state.model';
+import { createFormState, resetFormState } from '../../../../shared/forms/form-utils';
 import { FormInput } from '../../../../shared/forms/inputs/form-input/form-input';
 import { FormInputType } from '../../../../shared/forms/inputs/form-input/form-input.type';
 import { AuthApiService } from '../../services/auth-api.service';
-import { AppEnvironment } from '../../../../core/config/app-environment';
 
 @Component({
   selector: 'vrm-resend-verify-email',
@@ -27,12 +28,7 @@ export class ResendVerifyEmail implements OnInit {
   private readonly snackBarService = inject(SnackBarService);
   private readonly router = inject(Router);
 
-  protected readonly formState: FormState = {
-    form: this.fb.group({}),
-    problemDetails: signal(null),
-    isSubmitted: signal(false),
-    isLoading: signal(false),
-  };
+  protected readonly formState: FormState = createFormState(this.fb.nonNullable.group({}));
 
   protected readonly siteUrls = SiteUrls;
   protected readonly formInputTypes = FormInputType;
@@ -60,8 +56,7 @@ export class ResendVerifyEmail implements OnInit {
       .pipe(finalize(() => this.formState.isLoading.set(false)))
       .subscribe({
         next: () => {
-          this.formState.problemDetails.set(null);
-          this.formState.form.reset();
+          resetFormState(this.formState.form);
           this.snackBarService.success(
             'Verification email has been sent, please check your inbox.',
           );

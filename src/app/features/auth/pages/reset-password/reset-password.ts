@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -9,6 +9,7 @@ import { SnackBarService } from '../../../../core/services/snackbar.service';
 import { BtnLoading } from '../../../../shared/components/buttons/btn-loading/btn-loading';
 import { FormIconPosition } from '../../../../shared/forms/form-icon-position.enum';
 import { FormState } from '../../../../shared/forms/form-state.model';
+import { createFormState, resetFormState } from '../../../../shared/forms/form-utils';
 import { FormInput } from '../../../../shared/forms/inputs/form-input/form-input';
 import { FormInputType } from '../../../../shared/forms/inputs/form-input/form-input.type';
 import { passwordMustMatchValidator } from '../../../../shared/forms/validators/password-must-match.validator';
@@ -34,12 +35,7 @@ export class ResetPassword implements OnInit {
   protected readonly siteName = AppEnvironment.SiteName;
   protected readonly siteUrls = SiteUrls;
 
-  protected readonly formState: FormState = {
-    form: this.fb.group({}),
-    problemDetails: signal(null),
-    isSubmitted: signal(false),
-    isLoading: signal(false),
-  };
+  protected readonly formState: FormState = createFormState(this.fb.nonNullable.group({}));
 
   ngOnInit(): void {
     this.buildForm();
@@ -70,7 +66,7 @@ export class ResetPassword implements OnInit {
       .pipe(finalize(() => this.formState.isLoading.set(false)))
       .subscribe({
         next: () => {
-          this.formState.form.reset();
+          resetFormState(this.formState.form);
           this.snackBarService.success('Password has been reset successfully');
           this.router.navigate([SiteUrls.auth.login]);
         },

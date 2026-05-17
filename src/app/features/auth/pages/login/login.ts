@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  inject,
-  OnInit,
-  signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -19,6 +12,7 @@ import { BtnLoading } from '../../../../shared/components/buttons/btn-loading/bt
 import { NonFieldErrors } from '../../../../shared/forms/errors/non-field-errors/non-field-errors';
 import { FormIconPosition } from '../../../../shared/forms/form-icon-position.enum';
 import { FormState } from '../../../../shared/forms/form-state.model';
+import { createFormState, resetFormState } from '../../../../shared/forms/form-utils';
 import { FormInput } from '../../../../shared/forms/inputs/form-input/form-input';
 import { FormInputType } from '../../../../shared/forms/inputs/form-input/form-input.type';
 
@@ -51,12 +45,7 @@ export class Login implements OnInit {
     () => this.formState.problemDetails()?.code === 'email_not_verified',
   );
 
-  protected readonly formState: FormState = {
-    form: this.fb.group({}),
-    problemDetails: signal(null),
-    isSubmitted: signal(false),
-    isLoading: signal(false),
-  };
+  protected readonly formState: FormState = createFormState(this.fb.nonNullable.group({}));
 
   ngOnInit(): void {
     this.buildForm();
@@ -80,6 +69,7 @@ export class Login implements OnInit {
       .pipe(finalize(() => this.formState.isLoading.set(false)))
       .subscribe({
         next: () => {
+          resetFormState(this.formState.form);
           this.router.navigate([SiteUrls.home]);
         },
         error: (error) => {
