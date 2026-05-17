@@ -8,5 +8,10 @@
   .verify-token-card {
     width: 100%;
     max-width: 420px;
+
+    mat-card-subtitle {
+      font-weight: 200;
+      margin-top: 0.6rem;
+    }
   }
 }

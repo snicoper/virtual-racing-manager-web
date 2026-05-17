@@ -58,7 +58,6 @@ export class Register implements OnInit {
       .subscribe({
         next: () => {
           resetFormState(this.formState.form);
-          this.formState.form.reset();
         },
         error: (error: HttpErrorResponse) => {
           this.formState.problemDetails.set(error.error);
