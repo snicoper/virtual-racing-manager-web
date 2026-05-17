@@ -4,6 +4,8 @@ export const SiteUrls = {
   auth: {
     login: '/auth/login',
     register: '/auth/register',
+    verifyEmail: '/auth/verify-email',
+    resendVerifyEmail: '/auth/resend-verify-email',
   },
 
   errors: {

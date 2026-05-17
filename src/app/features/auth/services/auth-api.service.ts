@@ -7,6 +7,7 @@ import { buildApiUrl } from '../../../core/navigation/url.utils';
 import { RegisterRequest } from '../contracts/requests/register.request';
 import { VerifyEmailRequest } from '../contracts/requests/verify-email.request';
 import { RegisterResponse } from '../contracts/responses/register.response';
+import { ResendVerifyEmail } from '../pages/resend-verify-email/resend-verify-email';
 
 @Injectable({
   providedIn: 'root',
@@ -24,5 +25,12 @@ export class AuthApiService extends ApiBaseService {
     const endpoint = buildApiUrl(ApiUrls.auth.verifyEmail);
 
     return this.post<VerifyEmailRequest, NoContent>(request, endpoint);
+  }
+
+  /** Resend a verification email to a user. */
+  resendVerifyEmail(request: ResendVerifyEmail): Observable<NoContent> {
+    const endpoint = buildApiUrl(ApiUrls.auth.resendVerifyEmail);
+
+    return this.post<ResendVerifyEmail, NoContent>(request, endpoint);
   }
 }

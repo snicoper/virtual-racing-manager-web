@@ -5,5 +5,6 @@ export const ApiUrls = {
     currentUser: '/auth/me',
     register: '/auth/register',
     verifyEmail: '/auth/verify-email',
+    resendVerifyEmail: '/auth/resend-verify-email',
   },
 } as const;
