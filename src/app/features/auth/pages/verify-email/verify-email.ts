@@ -6,6 +6,7 @@ import { finalize } from 'rxjs';
 import { AppEnvironment } from '../../../../core/config/app-environment';
 import { SiteUrls } from '../../../../core/navigation/site-urls';
 import { AuthApiService } from '../../services/auth-api.service';
+import { VerifyEmailRequest } from './verify-email.request';
 
 @Component({
   selector: 'vrm-verify-email',
@@ -18,8 +19,11 @@ export class VerifyEmail implements OnInit {
   private readonly authApiService = inject(AuthApiService);
   private readonly route = inject(ActivatedRoute);
 
-  protected readonly loading = signal(true);
-  protected readonly isTokenValid = signal(false);
+  private readonly loadingSignal = signal(true);
+  private readonly isTokenValidSignal = signal(false);
+
+  protected readonly loading = this.loadingSignal.asReadonly();
+  protected readonly isTokenValid = this.isTokenValidSignal.asReadonly();
   protected readonly siteUrls = SiteUrls;
   protected readonly siteName = AppEnvironment.SiteName;
 
@@ -27,20 +31,26 @@ export class VerifyEmail implements OnInit {
     const token = this.route.snapshot.queryParamMap.get('token');
 
     if (!token) {
-      this.isTokenValid.set(false);
+      this.isTokenValidSignal.set(false);
 
       return;
     }
 
+    const verifyEmailRequest: VerifyEmailRequest = {
+      token: token,
+    };
+
+    this.loadingSignal.set(true);
+
     this.authApiService
-      .verifyEmail({ token })
-      .pipe(finalize(() => this.loading.set(false)))
+      .verifyEmail(verifyEmailRequest)
+      .pipe(finalize(() => this.loadingSignal.set(false)))
       .subscribe({
         next: () => {
-          this.isTokenValid.set(true);
+          this.isTokenValidSignal.set(true);
         },
         error: () => {
-          this.isTokenValid.set(false);
+          this.isTokenValidSignal.set(false);
         },
       });
   }

@@ -16,6 +16,7 @@ import { FormState } from '../../../../shared/forms/form-state.model';
 import { createFormState, resetFormState } from '../../../../shared/forms/form-utils';
 import { FormInput } from '../../../../shared/forms/inputs/form-input/form-input';
 import { FormInputType } from '../../../../shared/forms/inputs/form-input/form-input.type';
+import { emailValidator } from '../../../../shared/forms/validators/email.validator';
 
 @Component({
   selector: 'vrm-login',
@@ -38,16 +39,15 @@ export class Login implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
-  protected readonly formInputTypes = FormInputType;
-  protected readonly iconPositions = FormIconPosition;
-  protected readonly siteName = AppEnvironment.SiteName;
-  protected readonly siteUrls = SiteUrls;
-
   protected readonly isEmailNotVerifiedError = computed(
     () => this.formState.problemDetails()?.code === 'email_not_verified',
   );
 
   protected readonly formState: FormState = createFormState(this.fb.nonNullable.group({}));
+  protected readonly formInputTypes = FormInputType;
+  protected readonly iconPositions = FormIconPosition;
+  protected readonly siteName = AppEnvironment.SiteName;
+  protected readonly siteUrls = SiteUrls;
 
   ngOnInit(): void {
     this.buildForm();
@@ -82,7 +82,7 @@ export class Login implements OnInit {
 
   private buildForm(): void {
     this.formState.form = this.fb.nonNullable.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, emailValidator()]],
       password: ['', [Validators.required]],
     });
   }

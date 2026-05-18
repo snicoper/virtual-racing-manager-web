@@ -9,7 +9,7 @@
     "login": {
       "title": "Login",
       "needVerificationEmail": "Need a new verification email?",
-      "resendVerificationEmail": "Resend Verification Email",
+      "resendVerificationEmail": "Need a new verification email?",
       "email": "Email",
       "password": "Password",
       "forgotPassword": "Forgot password?",
@@ -51,5 +51,21 @@
     "email": "{{field}} is not valid",
     "minlength": "{{field}} must be at least {{requiredLength}} characters",
     "passwordMismatch": "Passwords do not match"
+  },
+  "apiError": {
+    "emailAlreadyExists": "Email already exists",
+    "invalidCredentials": "Invalid credentials",
+    "userNotActive": "User is not active",
+    "userNotFound": "User not found",
+    "emailNotVerified": "Email is not verified",
+    "validationFailed": "Validation failed",
+    "notFound": "The requested resource was not found",
+    "conflict": "A conflict occurred",
+    "invalidRefreshToken": "Invalid refresh token",
+    "passwordMismatch": "Passwords do not match",
+
+    "isEmail": "Email must be an email",
+    "isString": "This field is required",
+    "isNotEmpty": "This field is required"
   }
 }

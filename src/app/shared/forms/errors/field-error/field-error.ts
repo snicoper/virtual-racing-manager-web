@@ -37,7 +37,8 @@ export class FieldError {
     return (
       this.formState()
         .problemDetails()
-        ?.errors?.[this.fieldName()]?.map((error) => this.translate.instant(error)) ?? []
+        ?.errors?.[this.fieldName()]?.map((error) => this.translate.instant(`apiError.${error}`)) ??
+      []
     );
   }
 

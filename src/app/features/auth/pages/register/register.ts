@@ -14,6 +14,7 @@ import { FormState } from '../../../../shared/forms/form-state.model';
 import { createFormState, resetFormState } from '../../../../shared/forms/form-utils';
 import { FormInput } from '../../../../shared/forms/inputs/form-input/form-input';
 import { FormInputType } from '../../../../shared/forms/inputs/form-input/form-input.type';
+import { emailValidator } from '../../../../shared/forms/validators/email.validator';
 import { passwordMustMatchValidator } from '../../../../shared/forms/validators/password-must-match.validator';
 import { AuthApiService } from '../../services/auth-api.service';
 import { RegisterRequest } from './register.request';
@@ -37,12 +38,11 @@ export class Register implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly authApiService = inject(AuthApiService);
 
+  protected readonly formState: FormState = createFormState(this.fb.nonNullable.group({}));
   protected readonly formInputTypes = FormInputType;
   protected readonly iconPositions = FormIconPosition;
   protected readonly siteName = AppEnvironment.SiteName;
   protected readonly siteUrls = SiteUrls;
-
-  protected readonly formState: FormState = createFormState(this.fb.nonNullable.group({}));
 
   ngOnInit(): void {
     this.buildForm();
@@ -77,7 +77,7 @@ export class Register implements OnInit {
   private buildForm(): void {
     this.formState.form = this.fb.nonNullable.group(
       {
-        email: ['', [Validators.required, Validators.email]],
+        email: ['', [Validators.required, emailValidator()]],
         password: ['', [Validators.required, Validators.minLength(8)]],
         confirmPassword: ['', [Validators.required]],
       },

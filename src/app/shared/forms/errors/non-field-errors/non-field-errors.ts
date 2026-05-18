@@ -23,7 +23,7 @@ export class NonFieldErrors {
     }
 
     if (error.code) {
-      return this.translate.instant(error.code);
+      return this.translate.instant(`apiError.${error.code}`);
     }
 
     return error.detail ?? error.title ?? null;

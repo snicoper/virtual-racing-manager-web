@@ -16,6 +16,7 @@ import { FormInput } from '../../../../shared/forms/inputs/form-input/form-input
 import { FormInputType } from '../../../../shared/forms/inputs/form-input/form-input.type';
 import { AuthApiService } from '../../services/auth-api.service';
 import { ForgotPasswordRequest } from './forgot-password.request';
+import { emailValidator } from '../../../../shared/forms/validators/email.validator';
 
 @Component({
   selector: 'vrm-forgot-password',
@@ -72,7 +73,7 @@ export class ForgotPassword implements OnInit {
 
   protected buildForm(): void {
     this.formState.form = this.fb.nonNullable.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, emailValidator()]],
     });
   }
 }

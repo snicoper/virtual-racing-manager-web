@@ -52,7 +52,7 @@
     "minlength": "{{field}} must be at least {{requiredLength}} characters",
     "passwordMismatch": "Passwords do not match"
   },
-  "badRequest": {
+  "apiError": {
     "emailAlreadyExists": "Email already exists",
     "invalidCredentials": "Invalid credentials",
     "userNotActive": "User is not active",
@@ -62,6 +62,10 @@
     "notFound": "The requested resource was not found",
     "conflict": "A conflict occurred",
     "invalidRefreshToken": "Invalid refresh token",
-    "passwordMismatch": "Passwords do not match"
+    "passwordMismatch": "Passwords do not match",
+
+    "isEmail": "Email must be an email",
+    "isString": "This field is required",
+    "isNotEmpty": "This field is required"
   }
 }

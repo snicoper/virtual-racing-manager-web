@@ -31,12 +31,11 @@ export class ResetPassword implements OnInit {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
 
+  protected readonly formState: FormState = createFormState(this.fb.nonNullable.group({}));
   protected readonly formInputTypes = FormInputType;
   protected readonly iconPositions = FormIconPosition;
   protected readonly siteName = AppEnvironment.SiteName;
   protected readonly siteUrls = SiteUrls;
-
-  protected readonly formState: FormState = createFormState(this.fb.nonNullable.group({}));
 
   ngOnInit(): void {
     this.buildForm();

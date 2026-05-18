@@ -14,6 +14,7 @@ import { FormState } from '../../../../shared/forms/form-state.model';
 import { createFormState, resetFormState } from '../../../../shared/forms/form-utils';
 import { FormInput } from '../../../../shared/forms/inputs/form-input/form-input';
 import { FormInputType } from '../../../../shared/forms/inputs/form-input/form-input.type';
+import { emailValidator } from '../../../../shared/forms/validators/email.validator';
 import { AuthApiService } from '../../services/auth-api.service';
 
 @Component({
@@ -30,7 +31,6 @@ export class ResendVerifyEmail implements OnInit {
   private readonly router = inject(Router);
 
   protected readonly formState: FormState = createFormState(this.fb.nonNullable.group({}));
-
   protected readonly siteUrls = SiteUrls;
   protected readonly formInputTypes = FormInputType;
   protected readonly iconPositions = FormIconPosition;
@@ -40,7 +40,7 @@ export class ResendVerifyEmail implements OnInit {
     this.buildForm();
   }
 
-  handleSubmit(): void {
+  protected handleSubmit(): void {
     this.formState.isSubmitted.set(true);
 
     if (this.formState.form.invalid) {
@@ -71,7 +71,7 @@ export class ResendVerifyEmail implements OnInit {
 
   private buildForm(): void {
     this.formState.form = this.fb.nonNullable.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, emailValidator()]],
     });
   }
 }
