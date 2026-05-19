@@ -1,6 +1,6 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { jwtDecode, JwtPayload } from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import {
   catchError,
   finalize,
@@ -15,12 +15,15 @@ import {
 import { BrowserStorageKey } from '../../browser-storage/browser-storage-key.enum';
 import { BrowserStorageService } from '../../browser-storage/browser-storage.service';
 import { SiteUrls } from '../../navigation/site-urls';
+import { CurrentProfileStateService } from '../../states/current-profile/current-profile-state.service';
+import { AuthState } from '../contracts/models/auth-state.model';
+import { AuthTokenPayload } from '../contracts/models/auth-token-payload.model';
+import { CurrentUserState } from '../contracts/models/current-user-state.model';
+import { CurrentUser } from '../contracts/models/current-user.model';
 import { LoginRequest } from '../contracts/requests/login.request';
 import { RefreshTokenRequest } from '../contracts/requests/refresh-token.request';
 import { CurrentUserResponse } from '../contracts/responses/current-user.response';
 import { LoginResponse } from '../contracts/responses/login.response';
-import { AuthState } from '../contracts/states/auth.state';
-import { CurrentUserState } from '../contracts/states/current-user.state';
 import { AuthApiService } from './auth-api.service';
 
 @Injectable({
@@ -30,12 +33,13 @@ export class AuthService {
   private readonly authApiService = inject(AuthApiService);
   private readonly browserStorageService = inject(BrowserStorageService);
   private readonly router = inject(Router);
+  private readonly currentProfileStateService = inject(CurrentProfileStateService);
 
-  private readonly currentUser = signal<CurrentUserResponse | null>(null);
+  private readonly currentUser = signal<CurrentUser | null>(null);
   private readonly isLoading = signal(false);
   private readonly accessToken = signal<string | null>(null);
   private readonly refreshToken = signal<string | null>(null);
-  private readonly decodedToken = signal<JwtPayload | null>(null);
+  private readonly decodedToken = signal<AuthTokenPayload | null>(null);
 
   readonly authState: AuthState = {
     isLoading: this.isLoading.asReadonly(),
@@ -56,6 +60,7 @@ export class AuthService {
 
     try {
       await firstValueFrom(this.loadCurrentUser());
+      await firstValueFrom(this.currentProfileStateService.load());
     } catch {
       this.clearSession();
     }
@@ -68,20 +73,19 @@ export class AuthService {
       switchMap((response) => {
         this.setSession(response);
 
-        return this.authApiService.getCurrentUser();
+        return this.loadCurrentUser();
       }),
-      tap((currentUser) => {
-        this.currentUser.set(currentUser);
-      }),
+      switchMap(() => this.currentProfileStateService.load()),
       map(() => void 0),
       finalize(() => this.isLoading.set(false)),
     );
   }
 
-  loadCurrentUser(): Observable<CurrentUserResponse> {
-    return this.authApiService
-      .getCurrentUser()
-      .pipe(tap((currentUser) => this.currentUser.set(currentUser)));
+  loadCurrentUser(): Observable<CurrentUser> {
+    return this.authApiService.getCurrentUser().pipe(
+      map((response) => this.mapCurrentUser(response)),
+      tap((currentUser) => this.currentUser.set(currentUser)),
+    );
   }
 
   getRefreshToken(): string | null {
@@ -177,6 +181,8 @@ export class AuthService {
 
     this.browserStorageService.remove(BrowserStorageKey.AccessToken);
     this.browserStorageService.remove(BrowserStorageKey.RefreshToken);
+
+    this.currentProfileStateService.clear();
   }
 
   private isExpired(): boolean {
@@ -189,9 +195,22 @@ export class AuthService {
     return Math.floor(Date.now() / 1000) >= exp;
   }
 
-  private decodeToken(token: string): JwtPayload | null {
+  private mapCurrentUser(response: CurrentUserResponse): CurrentUser {
+    return {
+      id: response.id,
+      email: response.email,
+      isActive: response.isActive,
+      createdAt: response.createdAt,
+      updatedAt: response.updatedAt,
+
+      roles: this.decodedToken()?.roles ?? [],
+      permissions: this.decodedToken()?.permissions ?? [],
+    };
+  }
+
+  private decodeToken(token: string): AuthTokenPayload | null {
     try {
-      return jwtDecode<JwtPayload>(token);
+      return jwtDecode<AuthTokenPayload>(token);
     } catch {
       return null;
     }
