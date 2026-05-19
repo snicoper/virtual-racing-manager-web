@@ -9,4 +9,10 @@ export const ApiUrls = {
     forgotPassword: '/auth/forgot-password',
     resetPassword: '/auth/reset-password',
   },
+
+  userProfiles: {
+    me: '/user-profiles/me',
+    getBySlug: '/user-profiles',
+    update: '/user-profiles/update',
+  },
 } as const;

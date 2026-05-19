@@ -1,4 +1,31 @@
 <vrm-page-layout>
-  <h1>Profile</h1>
-  <a [routerLink]="siteUrls.userProfiles.update" class="btn btn-primary">Update</a>
+  <div class="update">
+    <vrm-page-header
+      title="userProfiles.profile.title"
+      subtitle="userProfiles.profile.subtitle"
+      [breadcrumbItems]="breadcrumbItems"
+    />
+
+    <mat-card class="profile-account">
+      <mat-card-content>
+        <h2>{{ 'userProfiles.profile.account.title' | translate }}</h2>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="profile-not-created mt-3">
+      <mat-card-content>
+        <h2>{{ 'userProfiles.profile.profileNotCreated.title' | translate }}</h2>
+        <p>{{ 'userProfiles.profile.profileNotCreated.description' | translate }}</p>
+        <a matButton="filled" [routerLink]="siteUrls.userProfiles.update">
+          {{ 'userProfiles.profile.profileNotCreated.action' | translate }}
+        </a>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="public-profile mt-3">
+      <mat-card-content>
+        <h2>{{ 'userProfiles.profile.publicProfile.title' | translate }}</h2>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </vrm-page-layout>

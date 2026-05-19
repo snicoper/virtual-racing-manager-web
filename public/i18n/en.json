@@ -53,7 +53,23 @@
   },
   "userProfiles": {
     "profile": {
-      "title": "Profile"
+      "title": "Profile",
+      "subtitle": "Your profile information",
+      "account": {
+        "title": "Account information",
+        "email": "Email",
+        "password": "Password"
+      },
+      "publicProfile": {
+        "title": "Public Profile",
+        "firstName": "First Name",
+        "lastName": "Last Name"
+      },
+      "profileNotCreated": {
+        "title": "You haven't created your profile yet.",
+        "description": "Create your driver profile to appear in championships and teams.",
+        "action": "Create profile"
+      }
     },
     "update": {
       "title": "Update Profile",
