@@ -1,27 +1,29 @@
-<mat-card appearance="outlined">
-  <mat-card-content>
-    @if (breadcrumbItems().length) {
-      <vrm-breadcrumb [items]="breadcrumbItems()" />
-    }
+<header class="page-header">
+  <mat-card>
+    <mat-card-content>
+      @if (breadcrumbItems().length) {
+        <vrm-breadcrumb [items]="breadcrumbItems()" />
+      }
 
-    <div class="page-header-content">
-      <div class="page-header-text">
-        @if (title()) {
-          <h1 class="page-header-title">
-            {{ title() | translate }}
-          </h1>
-        }
+      <div class="page-header-content">
+        <div class="page-header-text">
+          @if (title()) {
+            <h1 class="page-header-title">
+              {{ title() | translate }}
+            </h1>
+          }
 
-        @if (subtitle()) {
-          <p class="page-header-subtitle">
-            {{ subtitle() | translate }}
-          </p>
-        }
+          @if (subtitle()) {
+            <p class="page-header-subtitle">
+              {{ subtitle() | translate }}
+            </p>
+          }
+        </div>
+
+        <div class="page-header-actions">
+          <ng-content />
+        </div>
       </div>
-
-      <div class="page-header-actions">
-        <ng-content />
-      </div>
-    </div>
-  </mat-card-content>
-</mat-card>
+    </mat-card-content>
+  </mat-card>
+</header>

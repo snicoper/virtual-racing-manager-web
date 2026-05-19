@@ -18,8 +18,15 @@
   min-width: var(--sidebar-width);
   max-width: var(--sidebar-width);
 
-  background-color: var(--mat-sys-surface-container-low);
-  border-right: 1px solid var(--mat-sys-outline-variant);
+  background-color: var(--mat-card-elevated-container-color, var(--mat-sys-surface-container-low));
+  border-color: var(--mat-card-elevated-container-color, var(--mat-sys-surface-container-low));
+  border-radius: var(--mat-card-elevated-container-shape, var(--mat-sys-corner-medium));
+  box-shadow: var(
+    --mat-card-elevated-container-elevation,
+    var(--mat-sys-level1) 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 3px 0px rgba(0, 0, 0, 0.12)
+  );
 }
 
 .sidebar-content {

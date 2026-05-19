@@ -5,7 +5,6 @@ export interface SidebarMenuItem {
 }
 
 export interface SidebarMenuSection {
-  id: string;
   title: string;
   icon: string;
   items: SidebarMenuItem[];
@@ -13,7 +12,6 @@ export interface SidebarMenuSection {
 
 export const SIDEBAR_MENU: SidebarMenuSection[] = [
   {
-    id: 'championships',
     title: 'Championships',
     icon: 'emoji_events',
     items: [
@@ -30,7 +28,6 @@ export const SIDEBAR_MENU: SidebarMenuSection[] = [
     ],
   },
   {
-    id: 'teams',
     title: 'Teams',
     icon: 'groups',
     items: [
@@ -47,7 +44,6 @@ export const SIDEBAR_MENU: SidebarMenuSection[] = [
     ],
   },
   {
-    id: 'races',
     title: 'Races',
     icon: 'flag',
     items: [

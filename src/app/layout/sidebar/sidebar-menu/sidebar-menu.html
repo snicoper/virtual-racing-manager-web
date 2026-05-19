@@ -1,28 +1,24 @@
 <nav class="sidebar-menu">
-  <mat-accordion multi>
-    @for (section of sidebarMenu; track section.title) {
-      <mat-expansion-panel class="sidebar-menu__section" [expanded]="isSectionExpanded(section.id)">
-        <mat-expansion-panel-header (click)="toggleSection(section.id)">
-          <mat-panel-title>
-            <mat-icon>{{ section.icon }}</mat-icon>
-            <span>{{ section.title }}</span>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
+  @for (section of sidebarMenu; track section.title) {
+    <section class="sidebar-menu__section">
+      <div class="sidebar-menu__section-title">
+        <mat-icon>{{ section.icon }}</mat-icon>
+        <span>{{ section.title }}</span>
+      </div>
 
-        <mat-nav-list>
-          @for (item of section.items; track item.route) {
-            <a
-              mat-list-item
-              routerLinkActive="active"
-              [routerLink]="item.route"
-              [routerLinkActiveOptions]="{ exact: true }"
-            >
-              <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
-              <span matListItemTitle>{{ item.text }}</span>
-            </a>
-          }
-        </mat-nav-list>
-      </mat-expansion-panel>
-    }
-  </mat-accordion>
+      <mat-nav-list>
+        @for (item of section.items; track item.route) {
+          <a
+            mat-list-item
+            routerLinkActive="active"
+            [routerLink]="item.route"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+            <span matListItemTitle>{{ item.text }}</span>
+          </a>
+        }
+      </mat-nav-list>
+    </section>
+  }
 </nav>

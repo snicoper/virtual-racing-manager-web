@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
 import { MatDivider } from '@angular/material/divider';
 import { MatIcon } from '@angular/material/icon';
 import { MatDrawer, MatDrawerContainer, MatDrawerContent } from '@angular/material/sidenav';
@@ -7,7 +8,15 @@ import { SidebarMenu } from './sidebar-menu/sidebar-menu';
 
 @Component({
   selector: 'vrm-sidebar',
-  imports: [MatDrawer, MatDrawerContainer, MatDrawerContent, MatIcon, MatDivider, SidebarMenu],
+  imports: [
+    MatDrawer,
+    MatDrawerContainer,
+    MatDrawerContent,
+    MatIcon,
+    MatDivider,
+    MatCardModule,
+    SidebarMenu,
+  ],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss',
 })
