@@ -1,4 +1,9 @@
 {
+  "common": {
+    "error": "Error",
+    "loading": "Loading...",
+    "home": "Home"
+  },
   "auth": {
     "forgotPassword": {
       "title": "Forgot password?",
@@ -46,6 +51,15 @@
       "resendEmail": "Resend Verification Email"
     }
   },
+  "userProfiles": {
+    "profile": {
+      "title": "Profile"
+    },
+    "update": {
+      "title": "Update Profile",
+      "subtitle": "Update your profile information"
+    }
+  },
   "validation": {
     "required": "{{field}} is required",
     "email": "{{field}} is not valid",
@@ -56,7 +70,6 @@
     "emailAlreadyExists": "Email already exists",
     "invalidCredentials": "Invalid credentials",
     "userNotActive": "User is not active",
-    "userNotFound": "User not found",
     "emailNotVerified": "Email is not verified",
     "validationFailed": "Validation failed",
     "notFound": "The requested resource was not found",
@@ -64,8 +77,10 @@
     "invalidRefreshToken": "Invalid refresh token",
     "passwordMismatch": "Passwords do not match",
 
-    "isEmail": "Email must be an email",
-    "isString": "This field is required",
-    "isNotEmpty": "This field is required"
+    "isEmailField": "Email must be an email",
+    "isStringField": "This field is required",
+    "isNotEmptyField": "This field is required",
+    "isSlugField": "This field format is invalid",
+    "minLengthField": "This field is too short"
   }
 }

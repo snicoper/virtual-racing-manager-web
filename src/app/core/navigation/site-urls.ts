@@ -11,6 +11,11 @@ export const SiteUrls = {
     logout: '/auth/logout',
   },
 
+  userProfiles: {
+    profile: '/user-profiles',
+    update: '/user-profiles/update',
+  },
+
   errors: {
     notFound: '/errors/404',
     forbidden: '/errors/403',

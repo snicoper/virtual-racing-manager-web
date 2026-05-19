@@ -72,7 +72,7 @@ export class Login implements OnInit {
       .subscribe({
         next: () => {
           resetFormState(this.formState.form);
-          this.router.navigate([SiteUrls.home]);
+          this.router.navigate([SiteUrls.userProfiles.profile]);
         },
         error: (error) => {
           this.formState.problemDetails.set(error.error);

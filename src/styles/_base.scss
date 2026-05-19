@@ -38,8 +38,17 @@ a {
   text-decoration: none;
   cursor: pointer;
 
+  transition:
+    color 150ms ease,
+    opacity 150ms ease;
+
   &:hover {
-    text-decoration: underline;
+    opacity: 0.85;
+    color: var(--mat-sys-primary-fixed);
+  }
+
+  &:active {
+    opacity: 0.8;
   }
 }
 
