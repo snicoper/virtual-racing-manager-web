@@ -7,7 +7,7 @@
     [ngModel]="value()"
     (ngModelChange)="onChangeValue($event)"
     [disabled]="isDisabled()"
-    [placeholder]="placeholderKey() | translate"
+    [placeholder]="labelKey() | translate"
     [type]="formInputType()"
     [readonly]="readonly()"
   />

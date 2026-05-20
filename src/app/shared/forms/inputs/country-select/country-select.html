@@ -1,0 +1,28 @@
+<label class="label" [for]="id">
+  {{ labelKey() | translate }}
+</label>
+
+<ng-select
+  class="vrm-country-select"
+  appearance="outline"
+  bindLabel="name"
+  bindValue="code"
+  [items]="countries()"
+  [ngModel]="value()"
+  (ngModelChange)="onChangeValue($event)"
+  [disabled]="isDisabled()"
+  [searchable]="true"
+  [clearable]="false"
+>
+  <ng-template ng-option-tmp let-item="item">
+    <span class="fi fi-{{ item.code | countryFlag }}"></span>
+    {{ item.name }}
+  </ng-template>
+
+  <ng-template ng-label-tmp let-item="item">
+    <span class="fi fi-{{ item.code | countryFlag }}"></span>
+    {{ item.name }}
+  </ng-template>
+</ng-select>
+
+<vrm-field-error [formState]="formState()" [fieldName]="fieldName()" [labelKey]="labelKey()" />

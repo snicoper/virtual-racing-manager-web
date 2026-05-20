@@ -36,13 +36,11 @@ export class Profile {
 
   protected readonly currentUser = this.authService.state.user;
   protected readonly currentProfile = this.currentProfileStateService.state.profile;
+  protected readonly hasProfile = this.currentProfileStateService.state.hasProfile;
+
   protected loading = false;
   protected readonly siteUrls = SiteUrls;
   protected readonly breadcrumbItems = this.buildBreadcrumbItems();
-
-  protected hasProfile(): boolean {
-    return this.currentProfileStateService.state.hasProfile();
-  }
 
   private buildBreadcrumbItems(): BreadcrumbItem[] {
     return [

@@ -1,44 +1,54 @@
 /* eslint-disable  @typescript-eslint/no-empty-function */
-import { Component, forwardRef, input, signal } from '@angular/core';
+import { Component, forwardRef, inject, input, signal } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIcon } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
+import {
+  NgLabelTemplateDirective,
+  NgOptionTemplateDirective,
+  NgSelectComponent,
+} from '@ng-select/ng-select';
 import { TranslatePipe } from '@ngx-translate/core';
+import { CountryLocaleService } from '../../../../core/localization/country-locale.service';
+import { CountryFlagPipe } from '../../../pipes/country-flag.pipe';
 import { FieldError } from '../../errors/field-error/field-error';
-import { FormIconPosition } from '../../form-icon-position.enum';
 import { FormState } from '../../form-state.model';
-import { FormInputType } from './form-input.type';
 
 @Component({
-  selector: 'vrm-form-input',
-  imports: [FormsModule, MatFormFieldModule, TranslatePipe, MatInputModule, MatIcon, FieldError],
-  templateUrl: './form-input.html',
-  styleUrl: './form-input.scss',
+  selector: 'vrm-country-select',
+  imports: [
+    FormsModule,
+    NgSelectComponent,
+    NgOptionTemplateDirective,
+    NgLabelTemplateDirective,
+    TranslatePipe,
+    FieldError,
+    CountryFlagPipe,
+  ],
+  templateUrl: './country-select.html',
+  styleUrl: './country-select.scss',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => FormInput),
+      useExisting: forwardRef(() => CountrySelect),
       multi: true,
     },
   ],
 })
-export class FormInput implements ControlValueAccessor {
+export class CountrySelect implements ControlValueAccessor {
+  private readonly countryLocaleService = inject(CountryLocaleService);
+
   readonly formState = input.required<FormState>();
   readonly fieldName = input.required<string>();
   readonly labelKey = input.required<string>();
-
-  readonly readonly = input(false);
-  readonly formInputType = input(FormInputType.Text);
-  readonly icon = input('');
-  readonly formIconPosition = input(FormIconPosition.prefix);
+  readonly placeholderKey = input('');
 
   protected readonly value = signal('');
   protected readonly isDisabled = signal(false);
-  protected readonly iconPositions = FormIconPosition;
 
+  protected readonly countries = this.countryLocaleService.value;
+
+  // Generate unique id for each instance of the component.
   private static nextId = 0;
-  protected readonly id = `input-field-${(FormInput.nextId += 1)}`;
+  protected readonly id = `country-select-${(CountrySelect.nextId += 1)}`;
 
   private onChange: (value: string) => void = () => {};
   private onTouch: () => void = () => {};

@@ -9,7 +9,7 @@ import { mapLocaleToLibraryFormat } from './localization.utils';
 /** Countries from library i18n-iso-countries. */
 @Injectable({ providedIn: 'root' })
 export class CountryLocaleService {
-  private readonly localeStateService = inject(LocaleService);
+  private readonly localeService = inject(LocaleService);
 
   private readonly countryLocales = signal<CountryLocale[]>([]);
 
@@ -29,7 +29,7 @@ export class CountryLocaleService {
 
     // Update countries list whenever the locale changes.
     effect(() => {
-      const locale = this.localeStateService.value();
+      const locale = this.localeService.value();
 
       if (locale) {
         this.updateCountriesList(mapLocaleToLibraryFormat(locale));

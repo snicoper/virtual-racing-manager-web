@@ -1,0 +1,42 @@
+:host {
+  display: block;
+}
+
+.label {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--mat-sys-on-surface);
+}
+
+.fi {
+  margin-right: 0.5rem;
+}
+
+:host ::ng-deep .vrm-country-select .ng-select-container {
+  min-height: 56px;
+  border-radius: 4px;
+  border: 1px solid var(--mat-sys-outline);
+  background-color: transparent;
+  color: var(--mat-sys-on-surface);
+}
+
+:host ::ng-deep .ng-dropdown-panel {
+  background: var(--mat-sys-surface-container);
+  border: 1px solid var(--mat-sys-outline);
+}
+
+:host ::ng-deep .ng-option {
+  background: var(--mat-sys-surface-container);
+  color: var(--mat-sys-on-surface) !important;
+}
+
+:host ::ng-deep .ng-option.ng-option-marked {
+  background: var(--mat-sys-surface-container-high);
+}
+
+:host ::ng-deep .ng-option.ng-option-selected {
+  background: var(--mat-sys-secondary-container);
+  color: var(--mat-sys-on-secondary-container);
+}

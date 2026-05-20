@@ -7,9 +7,57 @@
 
   <mat-card>
     <mat-card-content>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem ratione sed sapiente alias
-      at. Sit unde numquam aperiam accusamus, quae atque animi excepturi ex quis, id perferendis
-      repellendus? Cum, cumque!
+      <form class="login-form" [formGroup]="formState.form" (ngSubmit)="handleSubmit()">
+        <vrm-non-field-errors class="mb-2" [formState]="formState" />
+
+        <vrm-form-input
+          formControlName="nickname"
+          fieldName="nickname"
+          labelKey="userProfiles.update.nickname"
+          [formState]="formState"
+        />
+
+        <vrm-form-input
+          formControlName="slug"
+          fieldName="slug"
+          labelKey="userProfiles.update.slug"
+          [formState]="formState"
+        />
+
+        <vrm-form-input
+          formControlName="firstName"
+          [formState]="formState"
+          fieldName="firstName"
+          labelKey="userProfiles.update.firstName"
+        />
+
+        <vrm-form-input
+          formControlName="lastName"
+          fieldName="lastName"
+          labelKey="userProfiles.update.lastName"
+          [formState]="formState"
+        />
+
+        <vrm-country-select
+          formControlName="country"
+          [formState]="formState"
+          fieldName="country"
+          labelKey="userProfiles.update.country"
+        />
+
+        <vrm-form-input
+          formControlName="avatarUrl"
+          fieldName="avatarUrl"
+          labelKey="userProfiles.update.avatarUrl"
+          [formState]="formState"
+        />
+
+        <vrm-btn-loading
+          styles="full-width"
+          btnKey="auth.login.submit"
+          [isLoading]="formState.isLoading()"
+        />
+      </form>
     </mat-card-content>
   </mat-card>
 </vrm-page-layout>

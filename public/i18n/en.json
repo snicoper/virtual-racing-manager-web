@@ -2,8 +2,26 @@
   "common": {
     "error": "Error",
     "loading": "Loading...",
+    "selectPlaceholder": "Select...",
     "home": "Home",
     "edit": "Edit"
+  },
+  "apiError": {
+    "emailAlreadyExists": "Email already exists",
+    "invalidCredentials": "Invalid credentials",
+    "userNotActive": "User is not active",
+    "emailNotVerified": "Email is not verified",
+    "validationFailed": "Validation failed",
+    "notFound": "The requested resource was not found",
+    "conflict": "A conflict occurred",
+    "invalidRefreshToken": "Invalid refresh token",
+    "passwordMismatch": "Passwords do not match",
+
+    "isEmailField": "Email must be an email",
+    "isStringField": "This field is required",
+    "isNotEmptyField": "This field is required",
+    "isSlugField": "This field format is invalid",
+    "minLengthField": "This field is too short"
   },
   "auth": {
     "forgotPassword": {
@@ -79,7 +97,19 @@
     },
     "update": {
       "title": "Update Profile",
-      "subtitle": "Update your profile information"
+      "subtitle": "Update your profile information",
+      "nickname": "Nickname",
+      "slug": "Slug",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "country": "Country",
+      "bio": "Bio",
+      "avatarUrl": "Avatar URL",
+      "publicProfile": {
+        "title": "Public Profile",
+        "firstName": "First Name",
+        "lastName": "Last Name"
+      }
     }
   },
   "validation": {
@@ -87,22 +117,5 @@
     "email": "{{field}} is not valid",
     "minlength": "{{field}} must be at least {{requiredLength}} characters",
     "passwordMismatch": "Passwords do not match"
-  },
-  "apiError": {
-    "emailAlreadyExists": "Email already exists",
-    "invalidCredentials": "Invalid credentials",
-    "userNotActive": "User is not active",
-    "emailNotVerified": "Email is not verified",
-    "validationFailed": "Validation failed",
-    "notFound": "The requested resource was not found",
-    "conflict": "A conflict occurred",
-    "invalidRefreshToken": "Invalid refresh token",
-    "passwordMismatch": "Passwords do not match",
-
-    "isEmailField": "Email must be an email",
-    "isStringField": "This field is required",
-    "isNotEmptyField": "This field is required",
-    "isSlugField": "This field format is invalid",
-    "minLengthField": "This field is too short"
   }
 }

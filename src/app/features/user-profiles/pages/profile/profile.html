@@ -35,49 +35,53 @@
       </mat-card-content>
     </mat-card>
 
-    <mat-card class="profile-not-created mt-3">
-      <mat-card-content>
-        <h2>{{ 'userProfiles.profile.profileNotCreated.title' | translate }}</h2>
-        <p>{{ 'userProfiles.profile.profileNotCreated.description' | translate }}</p>
-        <a matButton="tonal" [routerLink]="siteUrls.userProfiles.update">
-          {{ 'userProfiles.profile.profileNotCreated.action' | translate }}
-        </a>
-      </mat-card-content>
-    </mat-card>
-
-    <mat-card class="public-profile mt-3">
-      <mat-card-content>
-        <div class="card-header">
-          <h2>{{ 'userProfiles.profile.publicProfile.title' | translate }}</h2>
-
+    @if (!hasProfile()) {
+      <mat-card class="profile-not-created mt-3">
+        <mat-card-content>
+          <h2>{{ 'userProfiles.profile.profileNotCreated.title' | translate }}</h2>
+          <p>{{ 'userProfiles.profile.profileNotCreated.description' | translate }}</p>
           <a matButton="tonal" [routerLink]="siteUrls.userProfiles.update">
-            <mat-icon>edit</mat-icon>
-            {{ 'common.edit' | translate }}
+            {{ 'userProfiles.profile.profileNotCreated.action' | translate }}
           </a>
-        </div>
+        </mat-card-content>
+      </mat-card>
+    }
 
-        <div class="public-profile-card">
-          <div class="public-profile-avatar">
-            {{ currentProfile()?.nickname?.charAt(0) }}
+    @if (hasProfile()) {
+      <mat-card class="public-profile mt-3">
+        <mat-card-content>
+          <div class="card-header">
+            <h2>{{ 'userProfiles.profile.publicProfile.title' | translate }}</h2>
+
+            <a matButton="tonal" [routerLink]="siteUrls.userProfiles.update">
+              <mat-icon>edit</mat-icon>
+              {{ 'common.edit' | translate }}
+            </a>
           </div>
 
-          <div class="public-profile-info">
-            <h3>{{ currentProfile()?.nickname }}</h3>
+          <div class="public-profile-card">
+            <div class="public-profile-avatar">
+              {{ currentProfile()?.nickname?.charAt(0) }}
+            </div>
 
-            <span class="real-name">
-              {{ currentProfile()?.firstName }} {{ currentProfile()?.lastName }}
+            <div class="public-profile-info">
+              <h3>{{ currentProfile()?.nickname }}</h3>
 
-              @if (currentProfile()?.country) {
-                <span class="fi fi-{{ currentProfile()?.country | countryFlag }}"> </span>
-              }
-            </span>
+              <span class="real-name">
+                {{ currentProfile()?.firstName }} {{ currentProfile()?.lastName }}
 
-            <p class="bio">
-              {{ currentProfile()?.bio }}
-            </p>
+                @if (currentProfile()?.country) {
+                  <span class="fi fi-{{ currentProfile()?.country | countryFlag }}"> </span>
+                }
+              </span>
+
+              <p class="bio">
+                {{ currentProfile()?.bio }}
+              </p>
+            </div>
           </div>
-        </div>
-      </mat-card-content>
-    </mat-card>
+        </mat-card-content>
+      </mat-card>
+    }
   </div>
 </vrm-page-layout>
