@@ -46,19 +46,23 @@ export class AuthService {
     isLoggedIn: computed(() => !!this.accessToken() && !this.isExpired()),
   };
 
-  readonly currentUserState: CurrentUserState = {
+  readonly state: CurrentUserState = {
     user: this.currentUser.asReadonly(),
     hasUser: computed(() => !!this.currentUser()),
   };
 
   async initialize(): Promise<void> {
-    const hasValidSession = this.restoreAuthState();
+    const hasSession = this.restoreAuthState();
 
-    if (!hasValidSession) {
+    if (!hasSession) {
       return;
     }
 
     try {
+      if (this.isExpired()) {
+        await firstValueFrom(this.tryRefreshToken());
+      }
+
       await firstValueFrom(this.loadCurrentUser());
       await firstValueFrom(this.currentProfileStateService.load());
     } catch {
@@ -162,12 +166,6 @@ export class AuthService {
     this.accessToken.set(storedAccessToken);
     this.refreshToken.set(storedRefreshToken);
     this.decodedToken.set(decodedToken);
-
-    if (this.isExpired()) {
-      this.clearSession();
-
-      return false;
-    }
 
     return true;
   }

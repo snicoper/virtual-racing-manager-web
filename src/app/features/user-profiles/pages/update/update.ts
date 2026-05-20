@@ -16,7 +16,6 @@ import { createFormState } from '../../../../shared/forms/form-utils';
 import { FormInput } from '../../../../shared/forms/inputs/form-input/form-input';
 import { FormInputType } from '../../../../shared/forms/inputs/form-input/form-input.type';
 import { emailValidator } from '../../../../shared/forms/validators/email.validator';
-import { UserProfilesApiService } from '../../services/user-profiles-api.service';
 
 @Component({
   selector: 'vrm-update',
@@ -36,7 +35,6 @@ import { UserProfilesApiService } from '../../services/user-profiles-api.service
 })
 export class Update implements OnInit {
   private readonly fb = inject(FormBuilder);
-  private readonly userProfilesApiService = inject(UserProfilesApiService);
   private readonly route = inject(ActivatedRoute);
 
   protected readonly formState: FormState = createFormState(this.fb.nonNullable.group({}));
