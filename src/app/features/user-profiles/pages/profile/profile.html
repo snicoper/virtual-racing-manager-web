@@ -39,7 +39,7 @@
       <mat-card-content>
         <h2>{{ 'userProfiles.profile.profileNotCreated.title' | translate }}</h2>
         <p>{{ 'userProfiles.profile.profileNotCreated.description' | translate }}</p>
-        <a matButton="filled" [routerLink]="siteUrls.userProfiles.update">
+        <a matButton="tonal" [routerLink]="siteUrls.userProfiles.update">
           {{ 'userProfiles.profile.profileNotCreated.action' | translate }}
         </a>
       </mat-card-content>
@@ -47,7 +47,14 @@
 
     <mat-card class="public-profile mt-3">
       <mat-card-content>
-        <h2>{{ 'userProfiles.profile.publicProfile.title' | translate }}</h2>
+        <div class="card-header">
+          <h2>{{ 'userProfiles.profile.publicProfile.title' | translate }}</h2>
+
+          <a matButton="tonal" [routerLink]="siteUrls.userProfiles.update">
+            <mat-icon>edit</mat-icon>
+            {{ 'common.edit' | translate }}
+          </a>
+        </div>
 
         <div class="public-profile-card">
           <div class="public-profile-avatar">
@@ -58,12 +65,11 @@
             <h3>{{ currentProfile()?.nickname }}</h3>
 
             <span class="real-name">
-              {{ currentProfile()?.firstName }}
-              {{ currentProfile()?.lastName }}
-            </span>
+              {{ currentProfile()?.firstName }} {{ currentProfile()?.lastName }}
 
-            <span class="country-flag">
-              <span class="fi fi-{{ currentProfile()?.country | countryFlag }}"> </span>
+              @if (currentProfile()?.country) {
+                <span class="fi fi-{{ currentProfile()?.country | countryFlag }}"> </span>
+              }
             </span>
 
             <p class="bio">

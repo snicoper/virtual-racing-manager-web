@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { AuthService } from '../../../../core/auth/services/auth.service';
@@ -16,6 +17,7 @@ import { DateTimeFormatPipe } from '../../../../shared/pipes/date-time-format.pi
   selector: 'vrm-profile',
   imports: [
     RouterLink,
+    MatIcon,
     MatCardModule,
     MatButtonModule,
     TranslatePipe,

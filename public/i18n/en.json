@@ -2,7 +2,8 @@
   "common": {
     "error": "Error",
     "loading": "Loading...",
-    "home": "Home"
+    "home": "Home",
+    "edit": "Edit"
   },
   "auth": {
     "forgotPassword": {
