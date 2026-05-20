@@ -1,7 +1,9 @@
+import { DateTime } from 'luxon';
+
 export interface CurrentUserResponse {
   id: string;
   email: string;
   isActive: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: DateTime;
+  updatedAt: DateTime;
 }

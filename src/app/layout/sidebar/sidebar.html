@@ -6,7 +6,10 @@
       </div>
 
       <div class="profile-info">
-        <h3>{{ displayName() }}</h3>
+        <h3>
+          <span class="fi fi-{{ currentProfile()?.country | countryFlag }}"> </span>
+          {{ displayName() }}
+        </h3>
         <span>{{ currentUser()?.email }}</span>
       </div>
     </section>

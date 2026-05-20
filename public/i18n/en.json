@@ -58,7 +58,12 @@
       "account": {
         "title": "Account information",
         "email": "Email",
-        "password": "Password"
+        "password": "Password",
+        "status": "Status",
+        "active": "Active",
+        "inactive": "Inactive",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At"
       },
       "publicProfile": {
         "title": "Public Profile",

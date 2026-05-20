@@ -3,7 +3,9 @@
     <mat-icon>menu</mat-icon>
   </button>
 
-  <span>{{ appName }}</span>
+  <a [routerLink]="siteUrls.home">
+    <span>{{ appName }}</span>
+  </a>
 
   <span class="spacer"></span>
 

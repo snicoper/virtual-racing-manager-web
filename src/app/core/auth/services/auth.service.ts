@@ -195,12 +195,7 @@ export class AuthService {
 
   private mapCurrentUser(response: CurrentUserResponse): CurrentUser {
     return {
-      id: response.id,
-      email: response.email,
-      isActive: response.isActive,
-      createdAt: response.createdAt,
-      updatedAt: response.updatedAt,
-
+      ...response,
       roles: this.decodedToken()?.roles ?? [],
       permissions: this.decodedToken()?.permissions ?? [],
     };

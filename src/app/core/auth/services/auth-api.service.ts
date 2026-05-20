@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { fromApiRequiredDateTime } from '../../date-time/date-time.utils';
 import { ApiBaseService } from '../../http/api-base.service';
 import { ApiUrls } from '../../navigation/api-urls';
 import { buildApiUrl } from '../../navigation/url.utils';
@@ -30,6 +31,10 @@ export class AuthApiService extends ApiBaseService {
   getCurrentUser(): Observable<CurrentUserResponse> {
     const endpoint = buildApiUrl(ApiUrls.auth.currentUser);
 
-    return this.get<CurrentUserResponse>(endpoint);
+    return this.get<CurrentUserResponse>(endpoint, (response) => ({
+      ...response,
+      createdAt: fromApiRequiredDateTime(response.createdAt),
+      updatedAt: fromApiRequiredDateTime(response.updatedAt),
+    }));
   }
 }

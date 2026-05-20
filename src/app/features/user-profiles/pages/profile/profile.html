@@ -9,6 +9,29 @@
     <mat-card class="profile-account">
       <mat-card-content>
         <h2>{{ 'userProfiles.profile.account.title' | translate }}</h2>
+
+        <div class="info-grid">
+          <div class="info-item">
+            <span>{{ 'userProfiles.profile.account.email' | translate }}</span>
+            <strong>{{ currentUser()?.email }}</strong>
+          </div>
+
+          <div class="info-item">
+            <span>{{ 'userProfiles.profile.account.status' | translate }}</span>
+            <strong>
+              {{
+                currentUser()?.isActive
+                  ? ('userProfiles.profile.account.active' | translate)
+                  : ('userProfiles.profile.account.inactive' | translate)
+              }}
+            </strong>
+          </div>
+
+          <div class="info-item">
+            <span>{{ 'userProfiles.profile.account.createdAt' | translate }}</span>
+            <strong>{{ currentUser()?.createdAt | dateTimeFormat }}</strong>
+          </div>
+        </div>
       </mat-card-content>
     </mat-card>
 
@@ -25,6 +48,29 @@
     <mat-card class="public-profile mt-3">
       <mat-card-content>
         <h2>{{ 'userProfiles.profile.publicProfile.title' | translate }}</h2>
+
+        <div class="public-profile-card">
+          <div class="public-profile-avatar">
+            {{ currentProfile()?.nickname?.charAt(0) }}
+          </div>
+
+          <div class="public-profile-info">
+            <h3>{{ currentProfile()?.nickname }}</h3>
+
+            <span class="real-name">
+              {{ currentProfile()?.firstName }}
+              {{ currentProfile()?.lastName }}
+            </span>
+
+            <span class="country-flag">
+              <span class="fi fi-{{ currentProfile()?.country | countryFlag }}"> </span>
+            </span>
+
+            <p class="bio">
+              {{ currentProfile()?.bio }}
+            </p>
+          </div>
+        </div>
       </mat-card-content>
     </mat-card>
   </div>

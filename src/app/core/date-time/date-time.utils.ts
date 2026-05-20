@@ -7,7 +7,16 @@ export function fromApiDateTime(value: string | DateTime | null | undefined): Da
     return null;
   }
 
-  if (value instanceof DateTime) {
+  if (DateTime.isDateTime(value)) {
+    return value;
+  }
+
+  return DateTime.fromISO(value);
+}
+
+/** Convert API value to DateTime where the value is required. */
+export function fromApiRequiredDateTime(value: string | DateTime): DateTime {
+  if (DateTime.isDateTime(value)) {
     return value;
   }
 
