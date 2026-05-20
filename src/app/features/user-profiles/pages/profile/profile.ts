@@ -23,6 +23,10 @@ export class Profile {
   protected readonly siteUrls = SiteUrls;
   protected readonly breadcrumbItems = this.buildBreadcrumbItems();
 
+  protected hasProfile(): boolean {
+    return this.currentProfileStateService.state.hasProfile();
+  }
+
   private buildBreadcrumbItems(): BreadcrumbItem[] {
     return [
       {

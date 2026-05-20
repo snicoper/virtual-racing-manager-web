@@ -2,12 +2,12 @@
   <mat-drawer class="sidebar" mode="side" [opened]="sidebarState()">
     <section class="profile">
       <div class="profile-avatar">
-        <mat-icon>sports_motorsports</mat-icon>
+        <span>{{ avatarText() }}</span>
       </div>
 
       <div class="profile-info">
-        <h3>Salvador Nicolas</h3>
-        <span>Administrator</span>
+        <h3>{{ displayName() }}</h3>
+        <span>{{ currentUser()?.email }}</span>
       </div>
     </section>
 

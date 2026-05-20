@@ -13,7 +13,38 @@
     </mat-icon>
   </button>
 
-  <button mat-icon-button>
-    <mat-icon>settings</mat-icon>
+  <button mat-icon-button [matMenuTriggerFor]="userMenu" class="user-menu-button">
+    <span class="user-avatar">
+      {{ avatarText() }}
+    </span>
   </button>
+
+  <mat-menu #userMenu="matMenu">
+    <div class="user-menu-header">
+      <strong>{{ displayName() }}</strong>
+
+      <span>
+        {{ currentUser()?.email }}
+      </span>
+    </div>
+
+    <mat-divider />
+
+    <button mat-menu-item [routerLink]="siteUrls.userProfiles.profile">
+      <mat-icon>person</mat-icon>
+      <span>Profile</span>
+    </button>
+
+    <button mat-menu-item>
+      <mat-icon>settings</mat-icon>
+      <span>Settings</span>
+    </button>
+
+    <mat-divider />
+
+    <button mat-menu-item (click)="handleLogout()">
+      <mat-icon>logout</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu>
 </mat-toolbar>

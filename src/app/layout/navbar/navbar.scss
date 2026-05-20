@@ -5,7 +5,7 @@
   display: block;
 }
 
-mat-toolbar {
+.navbar {
   background-color: var(--mat-card-elevated-container-color, var(--mat-sys-surface-container-low));
   border-color: var(--mat-card-elevated-container-color, var(--mat-sys-surface-container-low));
   border-radius: var(--mat-card-elevated-container-shape, var(--mat-sys-corner-medium));
@@ -15,4 +15,57 @@ mat-toolbar {
     0px 1px 1px 0px rgba(0, 0, 0, 0.14),
     0px 1px 3px 0px rgba(0, 0, 0, 0.12)
   );
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.user-menu-button {
+  padding: 0;
+}
+
+.user-avatar {
+  display: grid;
+  place-items: center;
+
+  width: 32px;
+  height: 32px;
+
+  border-radius: 50%;
+
+  background: var(--mat-sys-primary-container);
+  color: var(--mat-sys-on-primary-container);
+
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.user-menu-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  min-width: 220px;
+  padding: 0.85rem 1rem 0.75rem;
+  box-sizing: border-box;
+
+  strong,
+  span {
+    display: block;
+    max-width: 188px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  strong {
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  span {
+    font-size: 0.8rem;
+    opacity: 0.7;
+  }
 }
